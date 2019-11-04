@@ -43,6 +43,6 @@ export default function(cart = defaultCart, action) {
         itemIds: cart.itemIds.filter(item => item.id !== action.itemId)
       }
     default:
-      return state
+      return cart
   }
 }
