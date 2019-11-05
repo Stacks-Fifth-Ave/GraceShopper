@@ -1,7 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import {removeProduct} from '../store/cart';
 const DisconnectedCart = props => {
+  console.log(props.products);
+  if (props.products.length === 0) {
+    return (
+      <div>
+        <h2>Cart is empty</h2>
+      </div>
+    );
+  }
   return (
     <div>
       {props.products.map(product => (
@@ -20,8 +28,11 @@ const mapStateToProps = state => {
     products: state.cart.products
   };
 };
-//map dispatch to props to remove items from cart
-//TBD
-// }
-const Cart = connect(mapStateToProps)(DisconnectedCart);
-export default Cart;
+const mapDispatchToProps = dispatch => {
+  return {
+    remove: productId => dispatch(removeProduct(productId))
+  };
+};
+export const Cart = connect(mapStateToProps, mapDispatchToProps)(
+  DisconnectedCart
+);
