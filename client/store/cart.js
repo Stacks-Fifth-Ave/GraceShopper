@@ -57,7 +57,7 @@ export default function(cart = defaultCart, action) {
       return {
         ...cart,
         products: cart.products.filter(
-          product => product.id !== action.productId
+          product => product.info.id !== action.product.info.id
         )
       };
     default:
