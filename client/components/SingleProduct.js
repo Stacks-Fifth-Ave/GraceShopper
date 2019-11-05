@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {addProduct} from '../store/cart';
 
 const SingleProduct = props => {
   return (
@@ -7,9 +9,15 @@ const SingleProduct = props => {
       <img src={props.product.image} />
       <p>{props.product.description}</p>
       <p>{props.product.price}</p>
-      <button type="submit">Add to Cart</button>
+      <button onClick={() => props.submit(props.product)} type="submit">
+        Add to Cart
+      </button>
     </div>
   );
 };
 
-export default SingleProduct;
+const mapDispatchToProps = dispatch => ({
+  submit: product => dispatch(addProduct(product))
+});
+
+export default connect(null, mapDispatchToProps)(SingleProduct);

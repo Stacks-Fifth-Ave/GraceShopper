@@ -15,20 +15,20 @@ const defaultCart = {products: []};
 /**
  * ACTION CREATORS
  */
-const addedProduct = product => ({type: ADD_PRODUCT, product});
-export const removeProduct = productId => ({type: REMOVE_PRODUCT, productId});
+export const addProduct = product => ({type: ADD_PRODUCT, product});
+export const removeProduct = product => ({type: REMOVE_PRODUCT, product});
 
 /**
  * THUNK CREATORS
  */
-export const addProduct = productId => async dispatch => {
-  try {
-    const res = await axios.get(`/api/products/${productId}`);
-    dispatch(addedProduct(res.data));
-  } catch (err) {
-    console.error(err);
-  }
-};
+// export const addProduct = productId => async dispatch => {
+//   try {
+//     const res = await axios.get(`/api/products/${productId}`);
+//     dispatch(addedProduct(res.data));
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 /**
  * REDUCER
