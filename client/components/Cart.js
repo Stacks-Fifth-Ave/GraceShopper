@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {removeProduct} from '../store/cart';
+
 const DisconnectedCart = props => {
   console.log(props.products);
   if (props.products.length === 0) {
@@ -16,7 +17,11 @@ const DisconnectedCart = props => {
         <div key={product.info.id}>
           <img src={product.info.image} />
           <h1>{product.info.name}</h1>
-          <h2>{product.info.price}</h2>
+          <p>{product.info.price}</p>
+          <p>Quantity: {product.quantity}</p>
+          <button onClick={() => props.remove(product)} type="submit">
+            Remove
+          </button>
         </div>
       ))}
     </div>
@@ -30,7 +35,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    remove: productId => dispatch(removeProduct(productId))
+    remove: product => dispatch(removeProduct(product))
   };
 };
 export const Cart = connect(mapStateToProps, mapDispatchToProps)(
