@@ -47,6 +47,7 @@ async function seed() {
   console.log('db synced!');
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
+
   await Promise.all(
     products.map(product => {
       return Product.create(product);
