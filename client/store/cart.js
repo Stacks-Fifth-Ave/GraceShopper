@@ -4,27 +4,27 @@ import history from '../history';
 /**
  * ACTION TYPES
  */
-const ADD_ITEM = 'ADD_ITEM';
-const REMOVE_ITEM = 'REMOVE_ITEM';
+const ADD_PRODUCT = 'ADD_PRODUCT';
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 
 /**
  * INITIAL STATE
  */
-const defaultCart = {items: []};
+const defaultCart = {products: []};
 
 /**
  * ACTION CREATORS
  */
-const addedItem = item => ({type: ADD_ITEM, item});
-const removeItem = itemId => ({type: REMOVE_ITEM, itemId});
+const addedProduct = product => ({type: ADD_PRODUCT, product});
+export const removeProduct = productId => ({type: REMOVE_PRODUCT, productId});
 
 /**
  * THUNK CREATORS
  */
-export const addItem = itemId => async dispatch => {
+export const addProduct = productId => async dispatch => {
   try {
-    const res = await axios.get(`/api/items/${itemId}`);
-    dispatch(addedItem(res.data.item));
+    const res = await axios.get(`/api/products/${productId}`);
+    dispatch(addedProduct(res.data));
   } catch (err) {
     console.error(err);
   }
@@ -35,12 +35,14 @@ export const addItem = itemId => async dispatch => {
  */
 export default function(cart = defaultCart, action) {
   switch (action.type) {
-    case ADD_ITEM:
-      return {...cart, items: [...cart.items, action.item]};
-    case REMOVE_ITEM:
+    case ADD_PRODUCT:
+      return {...cart, products: [...cart.products, action.product]};
+    case REMOVE_PRODUCT:
       return {
         ...cart,
-        items: cart.items.filter(item => item.id !== action.itemId)
+        products: cart.products.filter(
+          product => product.id !== action.productId
+        )
       };
     default:
       return cart;

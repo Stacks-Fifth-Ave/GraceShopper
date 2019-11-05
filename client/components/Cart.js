@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 const Cart = props => {
   return (
     <div>
-      {props.items.map(item => (
-        <div key={item.id}>
-          <h1>{item.name}</h1>
-          <h2>{item.price}</h2>
+      {props.products.map(product => (
+        <div key={product.id}>
+          <img src={product.image} />
+          <h1>{product.name}</h1>
+          <h2>{product.price}</h2>
         </div>
       ))}
     </div>
@@ -16,14 +17,11 @@ const Cart = props => {
 //map state to props to get cart info from store
 const mapStateToProps = state => {
   return {
-    items: state.cart.items
+    products: state.cart.products
   };
 };
 //map dispatch to props to remove items from cart
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     removeItem: dispatch(removeItem)
-//   }
+//TBD
 // }
 
 export default connect(mapStateToProps)(Cart);
