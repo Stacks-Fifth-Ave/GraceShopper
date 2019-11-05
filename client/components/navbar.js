@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../store';
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+// temporarily taking implicit return out of this functional compoent
+const Navbar = props => (
   <div>
     <h1>Stacks Fifth Avenue</h1>
     <nav>
@@ -12,24 +13,21 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <Link to="/cart">Cart</Link>
         <Link to="/allProducts">All Products</Link>
       </div>
-      {isLoggedIn ? (
+      {props.isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">User Profile</Link>
-        </div>
-      ) : (
-        <div>{/* The navbar will show these links before you log in */}</div>
-      )}
-      {isLoggedIn ? (
-        <div>
-          <a href="#" onClick={handleClick}>
+          <a href="#" onClick={props.handleClick}>
             Logout
           </a>
+          {props.userEmail}
         </div>
       ) : (
         <div>
+          {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          Guest
         </div>
       )}
     </nav>
@@ -42,7 +40,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userEmail: state.user.email
   };
 };
 
