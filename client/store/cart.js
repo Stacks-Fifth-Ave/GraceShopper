@@ -43,8 +43,10 @@ export default function(cart = defaultCart, action) {
           exists = true;
           currProduct.quantity++;
           return currProduct;
-        }
+        } else {return currProduct;}
       });
+
+      console.log('updated, ', updatedProducts);
       if (exists) {
         return {...cart, products: [...updatedProducts]};
       }
