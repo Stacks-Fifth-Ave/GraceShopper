@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const Cart = props => {
+const DisconnectedCart = props => {
   return (
     <div>
       {props.products.map(product => (
@@ -23,5 +23,5 @@ const mapStateToProps = state => {
 //map dispatch to props to remove items from cart
 //TBD
 // }
-
-export default connect(mapStateToProps)(Cart);
+const Cart = connect(mapStateToProps)(DisconnectedCart);
+export default Cart;
