@@ -1,22 +1,28 @@
 import React from 'react';
 import axios from 'axios';
+import SingleProduct from './SingleProduct';
 
 class allProducts extends React.Component {
   constructor() {
     super();
-    this.products = [];
+    this.state = {
+      products: []
+    };
   }
 
-  componentDidMount() {
-    const {data} = axios.get('/api/products');
-    this.products = data;
+  async componentDidMount() {
+    const {data} = await axios.get('/api/products');
+    this.setState({
+      products: data
+    });
   }
 
   render() {
-    console.log('products', this.products);
     return (
       <div>
-        {this.products ? this.products.map(product => 'product') : 'loading'}
+        {this.state.products.map(product => (
+          <SingleProduct key={product.id} product={product} />
+        ))}
       </div>
     );
   }
