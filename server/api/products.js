@@ -1,15 +1,14 @@
 const router = require('express').Router();
 const {Product} = require('../db/models');
 
-const NO_PRODUCTS = 'no products found';
-const PRODUCT_NOT_FOUND = 'product not found';
-const ID_NO = '\nid #: ';
+const NO_PRODUCTS = 'No products found.';
+const PRODUCT_NOT_FOUND = 'Product not found. ID #: ';
 
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll();
     if (products.length < 1) {
-      return res.send(NO_PRODUCTS);
+      return res.status(404).send(NO_PRODUCTS);
     }
     res.json(products);
   } catch (err) {
@@ -19,14 +18,14 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
-    let id = req.params.productId;
-    const product = await Product.findByPk(id);
+    let productId = req.params.productId;
+    const product = await Product.findByPk(productId);
 
-    if (product !== null) {
-      res.json(product);
+    if (product === null) {
+      return res.status(404).send(PRODUCT_NOT_FOUND + productId);
     }
 
-    res.send(PRODUCT_NOT_FOUND + ID_NO + id);
+    res.json(product);
   } catch (err) {
     next(err);
   }
