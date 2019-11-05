@@ -36,7 +36,23 @@ export const removeProduct = product => ({type: REMOVE_PRODUCT, product});
 export default function(cart = defaultCart, action) {
   switch (action.type) {
     case ADD_PRODUCT:
-      return {...cart, products: [...cart.products, action.product]};
+      const product = {info: action.product, quantity: 1};
+      let exists = false;
+      const updatedProducts = cart.products.map(currProduct => {
+        if (currProduct.info.id === product.info.id) {
+          exists = true;
+          currProduct.quantity++;
+          return currProduct;
+        }
+      });
+      if (exists) {
+        return {...cart, products: [...updatedProducts]};
+      }
+
+      if (!exists) {
+        return {...cart, products: [...cart.products, product]};
+      }
+
     case REMOVE_PRODUCT:
       return {
         ...cart,

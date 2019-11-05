@@ -13,10 +13,10 @@ const DisconnectedCart = props => {
   return (
     <div>
       {props.products.map(product => (
-        <div key={product.id}>
-          <img src={product.image} />
-          <h1>{product.name}</h1>
-          <h2>{product.price}</h2>
+        <div key={product.info.id}>
+          <img src={product.info.image} />
+          <h1>{product.info.name}</h1>
+          <h2>{product.info.price}</h2>
         </div>
       ))}
     </div>
