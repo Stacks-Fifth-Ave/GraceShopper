@@ -2,7 +2,6 @@
 
 const db = require('../server/db');
 const {User} = require('../server/db/models');
-const db = require('../server/db')
 const User = require('../server/db/models/user')
 const Product = require('../server/db/models/product')
 
@@ -43,7 +42,6 @@ const users = [
   {email: 'malka@email.com', password: '123'},
   {email: 'andy@email.com', password: '123'}
 ]
-
 async function seed() {
   await db.sync({force: true});
   console.log('db synced!');
@@ -52,7 +50,6 @@ async function seed() {
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ]);
-
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
   await Promise.all(
