@@ -10,9 +10,14 @@ label {
   display: block;
 }
 
+nav {
+  display: flex;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
+  flex-direction: row;
 }
 
 form div {
