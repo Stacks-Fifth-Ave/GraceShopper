@@ -8,11 +8,9 @@ const ID_NO = '\nid #: ';
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll();
-
     if (products.length < 1) {
       return res.send(NO_PRODUCTS);
     }
-
     res.json(products);
   } catch (err) {
     next(err);
