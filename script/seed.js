@@ -2,9 +2,8 @@
 
 const db = require('../server/db');
 const {User} = require('../server/db/models');
-const db = require('../server/db')
-const User = require('../server/db/models/user')
-const Product = require('../server/db/models/product')
+//const User = require('../server/db/models/user')
+const Product = require('../server/db/models/product');
 
 const products = [
   {
@@ -35,14 +34,14 @@ const products = [
     image:
       'https://images.unsplash.com/photo-1449505278894-297fdb3edbc1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
   }
-]
+];
 
 const users = [
   {email: 'stefanie@email.com', password: '123'},
   {email: 'camryn@email.com', password: '123'},
   {email: 'malka@email.com', password: '123'},
   {email: 'andy@email.com', password: '123'}
-]
+];
 
 async function seed() {
   await db.sync({force: true});
@@ -57,20 +56,20 @@ async function seed() {
   console.log(`seeded successfully`);
   await Promise.all(
     products.map(product => {
-      return Product.create(product)
+      return Product.create(product);
     })
-  )
+  );
 
   await Promise.all(
     users.map(user => {
-      return User.create(user)
+      return User.create(user);
     })
-  )
+  );
 
-  console.log(`seeded ${products.length} products`)
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${products.length} products`);
+  console.log(`seeded ${users.length} users`);
 
-  console.log(`seeded successfully`)
+  console.log(`seeded successfully`);
 }
 
 // We've separated the `seed` function from the `runSeed` function.
