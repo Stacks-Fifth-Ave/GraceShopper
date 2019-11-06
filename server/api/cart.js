@@ -46,7 +46,7 @@ router.post('/:userId', async (req, res, next) => {
 
 router.put('/addProduct/:userId', async (req, res, next) => {
   try {
-    const productId = req.body.product;
+    const productId = req.body.productId;
     const currentCart = await Cart.findOne({
       where: {
         userId: req.params.userId,
@@ -62,9 +62,9 @@ router.put('/addProduct/:userId', async (req, res, next) => {
   }
 });
 
-router.delete('/removeProduct/:userId', async (req, res, next) => {
+router.put('/removeProduct/:userId', async (req, res, next) => {
   try {
-    const product = req.body.product;
+    const productId = req.body.productId;
     const currentCart = await Cart.findOne({
       where: {
         userId: req.params.userId,
@@ -72,7 +72,8 @@ router.delete('/removeProduct/:userId', async (req, res, next) => {
       }
     });
 
-    currentCart.removeProduct(product);
+    currentCart.removeProduct(productId);
+    res.sendStatus(204);
   } catch (err) {
     console.error(err.message);
     next(err);
