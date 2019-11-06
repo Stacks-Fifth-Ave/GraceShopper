@@ -10,7 +10,7 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 /**
  * INITIAL STATE
  */
-const defaultCart = {products: []};
+let defaultCart = {products: []};
 
 /**
  * ACTION CREATORS
@@ -22,7 +22,6 @@ export const removePruduct = product => ({type: REMOVE_PRODUCT, product});
  * THUNK CREATORS
  */
 
-//this thunk creater should add product to both backend and fontend cart
 export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
@@ -34,7 +33,6 @@ export const addProduct = product => async dispatch => {
   }
 };
 
-//this thunk creater should remove product to both backend and fontend cart
 export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
@@ -44,6 +42,15 @@ export const removeProduct = product => async dispatch => {
   } catch (err) {
     console.error(err);
   }
+};
+
+export const getCart = async () => {
+  const {data} = await axios.get('/auth/me');
+  const userId = data.id || 0;
+  if (userId === data.id) {
+    const cart = axios.get(`/api/cart/${userId}`).data;
+    defaultCart = cart;
+  } else {defaultCart = window.Storage.cart;}
 };
 
 /**
