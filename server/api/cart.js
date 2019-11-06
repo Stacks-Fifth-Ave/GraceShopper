@@ -4,6 +4,17 @@ const {Cart} = require('../db/models');
 //in the case of a guest, what is the route for the cart?
 
 //router that returns current cart based on userId
+
+router.get('/', async (req, res, next) => {
+  try {
+    const carts = await Cart.findAll();
+
+    res.json(carts);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/:userId', async (req, res, next) => {
   try {
     const currentCart = await Cart.findOne({
@@ -20,9 +31,22 @@ router.get('/:userId', async (req, res, next) => {
   }
 });
 
+router.post('/:userId', async (req, res, next) => {
+  try {
+    const newCart = await Cart.create({
+      userId: req.params.userId
+    });
+
+    res.json(newCart);
+  } catch (err) {
+    console.error(err.message);
+    next(err);
+  }
+});
+
 router.put('/addProduct/:userId', async (req, res, next) => {
   try {
-    const product = req.body.product;
+    const productId = req.body.product;
     const currentCart = await Cart.findOne({
       where: {
         userId: req.params.userId,
@@ -30,19 +54,8 @@ router.put('/addProduct/:userId', async (req, res, next) => {
       }
     });
 
-    currentCart.addProduct(product);
-  } catch (err) {
-    console.error(err.message);
-    next(err);
-  }
-});
-
-router.post('/:userId', async (req, res, next) => {
-  try {
-    const newCart = await Cart.create();
-
-    newCart.userId = req.params.userId;
-    res.json(newCart);
+    currentCart.addProduct(productId);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err.message);
     next(err);
