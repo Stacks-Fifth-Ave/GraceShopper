@@ -15,8 +15,8 @@ let defaultCart = {products: []};
 /**
  * ACTION CREATORS
  */
-export const addPruduct = product => ({type: ADD_PRODUCT, product});
-export const removePruduct = product => ({type: REMOVE_PRODUCT, product});
+export const addedProduct = product => ({type: ADD_PRODUCT, product});
+export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
 
 /**
  * THUNK CREATORS
@@ -26,8 +26,8 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.update(`/api/cart/addProduct/${userId}`);
-    dispatch(addProduct(product));
+    await axios.put(`/api/cart/addProduct/${userId}`);
+    dispatch(addedProduct(product));
   } catch (err) {
     console.error(err);
   }
@@ -37,8 +37,8 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.update(`/api/cart/removeProduct/${userId}`);
-    dispatch(removeProduct(product));
+    await axios.put(`/api/cart/removeProduct/${userId}`);
+    dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
   }
@@ -50,7 +50,9 @@ export const getCart = async () => {
   if (userId === data.id) {
     const cart = axios.get(`/api/cart/${userId}`).data;
     defaultCart = cart;
-  } else {defaultCart = window.Storage.cart;}
+  } else {
+    defaultCart = window.Storage.cart;
+  }
 };
 
 /**
