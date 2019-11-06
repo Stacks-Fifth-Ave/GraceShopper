@@ -26,7 +26,7 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.put(`/api/cart/addProduct/${userId}`);
+    if (userId) await axios.put(`/api/cart/addProduct/${userId}`);
     dispatch(addedProduct(product));
   } catch (err) {
     console.error(err);
@@ -37,7 +37,7 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.put(`/api/cart/removeProduct/${userId}`);
+    if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
     dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
