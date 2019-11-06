@@ -12,12 +12,14 @@ router.get('/:userId', async (req, res, next) => {
         completed: false
       }
     });
+
     res.json(currentCart);
   } catch (err) {
     console.error(err.message);
     next(err);
   }
 });
+
 router.put('/addProduct/:userId', async (req, res, next) => {
   try {
     const product = req.body.product;
@@ -27,6 +29,7 @@ router.put('/addProduct/:userId', async (req, res, next) => {
         completed: false
       }
     });
+
     currentCart.addProduct(product);
   } catch (err) {
     console.error(err.message);
@@ -34,9 +37,11 @@ router.put('/addProduct/:userId', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
     const newCart = await Cart.create();
+
+    newCart.userId = req.params.userId;
     res.json(newCart);
   } catch (err) {
     console.error(err.message);
@@ -53,6 +58,7 @@ router.delete('/removeProduct/:userId', async (req, res, next) => {
         completed: false
       }
     });
+
     currentCart.removeProduct(product);
   } catch (err) {
     console.error(err.message);
