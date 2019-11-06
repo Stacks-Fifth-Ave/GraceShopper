@@ -27,6 +27,7 @@ const DisconnectedCart = props => {
     </div>
   );
 };
+
 //map state to props to get cart info from store
 const mapStateToProps = state => {
   return {
