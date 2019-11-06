@@ -27,7 +27,9 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.update(`/api/cart/addProduct/${userId}`);
+
+    console.dir(data.id);
+    await axios.put(`/api/cart/addProduct/${userId}`, {productId: product.id});
     dispatch(addProduct(product));
   } catch (err) {
     console.error(err);
@@ -39,6 +41,8 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
+
+    // next line needs to be fixed should mirror addProduct thunk creator above
     await axios.update(`/api/cart/removeProduct/${userId}`);
     dispatch(removeProduct(product));
   } catch (err) {
