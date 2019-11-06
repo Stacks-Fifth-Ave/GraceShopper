@@ -15,20 +15,36 @@ const defaultCart = {products: []};
 /**
  * ACTION CREATORS
  */
-export const addProduct = product => ({type: ADD_PRODUCT, product});
-export const removeProduct = product => ({type: REMOVE_PRODUCT, product});
+export const addPruduct = product => ({type: ADD_PRODUCT, product});
+export const removePruduct = product => ({type: REMOVE_PRODUCT, product});
 
 /**
  * THUNK CREATORS
  */
-// export const addProduct = productId => async dispatch => {
-//   try {
-//     const res = await axios.get(`/api/products/${productId}`);
-//     dispatch(addedProduct(res.data));
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
+
+//this thunk creater should add product to both backend and fontend cart
+export const addProduct = product => async dispatch => {
+  try {
+    const {data} = await axios.get('/auth/me');
+    const userId = data.id || 0;
+    await axios.update(`/api/cart/addProduct${userId}`);
+    dispatch(addProduct(product));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+//this thunk creater should remove product to both backend and fontend cart
+export const removeProduct = product => async dispatch => {
+  try {
+    const {data} = await axios.get('/auth/me');
+    const userId = data.id || 0;
+    await axios.update(`/api/cart/removeProduct${userId}`);
+    dispatch(removeProduct(product));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 /**
  * REDUCER
@@ -43,7 +59,9 @@ export default function(cart = defaultCart, action) {
           exists = true;
           currProduct.quantity++;
           return currProduct;
-        } else {return currProduct;}
+        } else {
+          return currProduct;
+        }
       });
 
       console.log('updated, ', updatedProducts);
