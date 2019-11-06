@@ -6,11 +6,13 @@ class DisconnectedCart extends React.Component {
   constructor() {
     super();
   }
+
   componentDidMount() {
     getCart();
   }
+
   render() {
-    if (props.products.length === 0) {
+    if (this.props.products.length === 0) {
       return (
         <div>
           <h2>Cart is empty</h2>
@@ -19,13 +21,13 @@ class DisconnectedCart extends React.Component {
     }
     return (
       <div>
-        {props.products.map(product => (
+        {this.props.products.map(product => (
           <div key={product.info.id}>
             <img src={product.info.image} />
             <h1>{product.info.name}</h1>
             <p>{product.info.price}</p>
             <p>Quantity: {product.quantity}</p>
-            <button onClick={() => props.remove(product)} type="submit">
+            <button onClick={() => this.props.remove(product)} type="submit">
               Remove
             </button>
           </div>
@@ -41,11 +43,13 @@ const mapStateToProps = state => {
     products: state.cart.products
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     remove: product => dispatch(removeProduct(product))
   };
 };
+
 export const Cart = connect(mapStateToProps, mapDispatchToProps)(
   DisconnectedCart
 );
