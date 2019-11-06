@@ -27,7 +27,7 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.update(`/api/cart/addProduct${userId}`);
+    await axios.update(`/api/cart/addProduct/${userId}`);
     dispatch(addProduct(product));
   } catch (err) {
     console.error(err);
@@ -39,7 +39,7 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    await axios.update(`/api/cart/removeProduct${userId}`);
+    await axios.update(`/api/cart/removeProduct/${userId}`);
     dispatch(removeProduct(product));
   } catch (err) {
     console.error(err);
