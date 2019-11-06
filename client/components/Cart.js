@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {removeProduct, getCart} from '../store/cart';
+import {removeProduct, getCart, clearProducts} from '../store/cart';
 
 class DisconnectedCart extends React.Component {
   constructor() {
@@ -32,6 +32,12 @@ class DisconnectedCart extends React.Component {
             </button>
           </div>
         ))}
+        <button
+          onClick={() => this.props.clear(this.props.products)}
+          type="submit"
+        >
+          Checkout
+        </button>
       </div>
     );
   }
@@ -46,7 +52,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    remove: product => dispatch(removeProduct(product))
+    remove: product => dispatch(removeProduct(product)),
+    clear: products => dispatch(clearProducts(products))
   };
 };
 

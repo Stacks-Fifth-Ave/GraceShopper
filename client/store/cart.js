@@ -6,6 +6,7 @@ import history from '../history';
  */
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ let defaultCart = {products: []};
  */
 export const addedProduct = product => ({type: ADD_PRODUCT, product});
 export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
+export const clearProducts = products => ({type: CLEAR_PRODUCTS, products});
 
 /**
  * THUNK CREATORS
@@ -89,6 +91,9 @@ export default function(cart = defaultCart, action) {
           product => product.info.id !== action.product.info.id
         )
       };
+
+    case CLEAR_PRODUCTS:
+      return {...cart, products: []};
     default:
       return cart;
   }
