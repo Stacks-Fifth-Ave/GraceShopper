@@ -49,7 +49,7 @@ export const removeProduct = product => async dispatch => {
 export const getCart = async () => {
   const {data} = await axios.get('/auth/me');
   const userId = data.id || 0;
-  if (userId === data.id) {
+  if (userId) {
     const cart = axios.get(`/api/cart/${userId}`).data;
     defaultCart = cart;
   } else {
