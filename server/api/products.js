@@ -31,4 +31,38 @@ router.get('/:productId', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  try {
+    const newProductInfo = req.body;
+    const newProduct = await Product.create(newProductInfo);
+    res.status(200).json(newProduct);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const curProductId = req.params.productId;
+    const curProduct = await Product.findByPk(curProductId);
+    const updatedInfo = req.body;
+    const updatedProduct = await curProduct.update(updatedInfo);
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    const productId = req.params.productId;
+    const product = await Product.destroy({
+      where: {id: productId}
+    });
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
