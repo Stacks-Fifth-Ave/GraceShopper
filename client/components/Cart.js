@@ -6,10 +6,18 @@ import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters.js';
 class DisconnectedCart extends React.Component {
   constructor() {
     super();
+    this.calculateTotal = this.calculateTotal.bind(this);
   }
 
   componentDidMount() {
     getCart();
+  }
+
+  calculateTotal() {
+    return this.props.products.reduce((total, product) => {
+      total += product.info.price * product.quantity;
+      return total;
+    }, 0);
   }
 
   render() {
@@ -33,6 +41,9 @@ class DisconnectedCart extends React.Component {
             </button>
           </div>
         ))}
+        <p>
+          Total: {centsToDollarString(this.calculateTotal(), DEFAULT_CURRENCY)}
+        </p>
         <button
           onClick={() => this.props.clear(this.props.products)}
           type="submit"
