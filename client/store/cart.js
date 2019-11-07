@@ -6,23 +6,24 @@ import history from '../history';
  */
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 
 /**
  * INITIAL STATE
  */
-const defaultCart = {products: []};
+let defaultCart = {products: []};
 
 /**
  * ACTION CREATORS
  */
-export const addPruduct = product => ({type: ADD_PRODUCT, product});
-export const removePruduct = product => ({type: REMOVE_PRODUCT, product});
+export const addedProduct = product => ({type: ADD_PRODUCT, product});
+export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
+export const clearProducts = products => ({type: CLEAR_PRODUCTS, products});
 
 /**
  * THUNK CREATORS
  */
 
-//this thunk creater should add product to both backend and fontend cart
 export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
@@ -31,22 +32,34 @@ export const addProduct = product => async dispatch => {
     console.dir(data.id);
     await axios.put(`/api/cart/addProduct/${userId}`, {productId: product.id});
     dispatch(addProduct(product));
+    if (userId) await axios.put(`/api/cart/addProduct/${userId}`);
+    dispatch(addedProduct(product));
   } catch (err) {
     console.error(err);
   }
 };
 
-//this thunk creater should remove product to both backend and fontend cart
 export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-
-    // next line needs to be fixed should mirror addProduct thunk creator above
     await axios.update(`/api/cart/removeProduct/${userId}`);
     dispatch(removeProduct(product));
+    if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
+    dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
+  }
+};
+
+export const getCart = async () => {
+  const {data} = await axios.get('/auth/me');
+  const userId = data.id || 0;
+  if (userId === data.id) {
+    const cart = axios.get(`/api/cart/${userId}`).data;
+    defaultCart = cart;
+  } else {
+    defaultCart = window.Storage.cart;
   }
 };
 
@@ -84,6 +97,9 @@ export default function(cart = defaultCart, action) {
           product => product.info.id !== action.product.info.id
         )
       };
+
+    case CLEAR_PRODUCTS:
+      return {...cart, products: []};
     default:
       return cart;
   }

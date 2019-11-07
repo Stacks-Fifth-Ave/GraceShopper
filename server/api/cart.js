@@ -80,4 +80,26 @@ router.put('/removeProduct/:userId', async (req, res, next) => {
   }
 });
 
+router.delete('/clearCart/:userId', async (req, res, next) => {
+  try {
+    const currentCart = await Cart.findOne({
+      where: {
+        userId: req.params.userId,
+        completed: false
+      }
+    });
+
+    currentCart.update({
+      complete: true
+    });
+
+    user.createCart({
+      completed: false
+    });
+  } catch (error) {
+    console.error(err.message);
+    next(err);
+  }
+});
+
 module.exports = router;
