@@ -1,4 +1,5 @@
 const DOT_FROM_RIGHT = 2; // index of . from left
+const DEFAULT_CURRENCY = '$';
 
 const centsToDollarString = (cents, symbol) => {
   let cStr = cents.toString();
@@ -40,5 +41,6 @@ const centsToDollarString = (cents, symbol) => {
 };
 
 module.exports = {
-  centsToDollarString
+  centsToDollarString,
+  DEFAULT_CURRENCY
 };
