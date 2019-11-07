@@ -8,28 +8,28 @@ const products = [
   {
     name: "The Stefanie's",
     description: 'Floral high heels',
-    price: 25.5,
+    price: 2550,
     image:
       'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
   },
   {
     name: "The Camryn's",
     description: 'Black high heels',
-    price: 29.5,
+    price: 2950,
     image:
       'https://images.unsplash.com/photo-1551489186-ccb95a1ea6a3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
   },
   {
     name: "The Malka's",
     description: 'White high heels',
-    price: 32.5,
+    price: 3250,
     image:
       'https://images.unsplash.com/photo-1552419272-b0d8e736ea2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
   },
   {
     name: "The Andy's",
     description: 'Brown leather lace-up boots',
-    price: 39.5,
+    price: 3950,
     image:
       'https://images.unsplash.com/photo-1449505278894-297fdb3edbc1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
   }

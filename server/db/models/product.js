@@ -11,8 +11,9 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  //  stored in cents
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   image: {
