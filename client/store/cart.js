@@ -84,14 +84,33 @@ export default function(cart = defaultCart, action) {
         return {...cart, products: [...cart.products, product]};
       }
 
+    //remove will check product quantity before removing. If quantity is greater than one, will update quantity and return new store
+    //else, there is only one left and will remove product from cart entirely
+    // eslint-disable-next-line no-fallthrough
     case REMOVE_PRODUCT:
-      return {
-        ...cart,
-        products: cart.products.filter(
-          product => product.info.id !== action.product.info.id
-        )
-      };
-
+      if (action.product.quantity > 1) {
+        const updatedProduct = {
+          info: action.product.info,
+          quantity: action.product.quantity - 1
+        };
+        return {
+          ...cart,
+          products: cart.products.map(product => {
+            if (product.info.id !== action.product.info.id) {
+              return product;
+            } else {
+              return updatedProduct;
+            }
+          })
+        };
+      } else {
+        return {
+          ...cart,
+          products: cart.products.filter(
+            product => product.info.id !== action.product.info.id
+          )
+        };
+      }
     case CLEAR_PRODUCTS:
       return {...cart, products: []};
     default:
