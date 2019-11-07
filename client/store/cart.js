@@ -28,6 +28,10 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
+
+    console.dir(data.id);
+    await axios.put(`/api/cart/addProduct/${userId}`, {productId: product.id});
+    dispatch(addProduct(product));
     if (userId) await axios.put(`/api/cart/addProduct/${userId}`);
     dispatch(addedProduct(product));
   } catch (err) {
@@ -39,6 +43,8 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
+    await axios.update(`/api/cart/removeProduct/${userId}`);
+    dispatch(removeProduct(product));
     if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
     dispatch(removedProduct(product));
   } catch (err) {
