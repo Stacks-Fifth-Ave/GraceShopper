@@ -93,9 +93,7 @@ router.delete('/clearCart/:userId', async (req, res, next) => {
       complete: true
     });
 
-    user.createCart({
-      completed: false
-    });
+    user.createCart();
   } catch (error) {
     console.error(err.message);
     next(err);
