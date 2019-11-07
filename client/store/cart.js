@@ -18,7 +18,7 @@ let defaultCart = {products: []};
  */
 export const addedProduct = product => ({type: ADD_PRODUCT, product});
 export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
-export const clearProducts = products => ({type: CLEAR_PRODUCTS, products});
+export const clearedProducts = () => ({type: CLEAR_PRODUCTS});
 
 /**
  * THUNK CREATORS
@@ -42,6 +42,17 @@ export const removeProduct = product => async dispatch => {
     if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
     dispatch(removedProduct(product));
   } catch (err) {
+    console.error(err);
+  }
+};
+
+export const clearProducts = () => async dispatch => {
+  try {
+    const {data} = await axios.get('/auth/me');
+    const userId = data.id;
+    if (userId) await axios.delete(`/api/cart/clearCart/${userId}`);
+    dispatch(clearedProducts());
+  } catch (error) {
     console.error(err);
   }
 };
@@ -75,7 +86,6 @@ export default function(cart = defaultCart, action) {
         }
       });
 
-      console.log('updated, ', updatedProducts);
       if (exists) {
         return {...cart, products: [...updatedProducts]};
       }
