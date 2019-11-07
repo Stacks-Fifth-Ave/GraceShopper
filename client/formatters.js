@@ -5,7 +5,7 @@ const centsToDollarString = (cents, symbol) => {
   let cStr = cents.toString();
   let isNegative = false;
 
-  if (cents < 0) {
+  if (cents <= 0) {
     // remove minus sign:
     cStr = cStr.slice(1);
     // only set isNegative flag if not 0
