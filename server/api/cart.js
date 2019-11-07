@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Cart} = require('../db/models');
+const {Cart, User} = require('../db/models');
 
 //in the case of a guest, what is the route for the cart?
 
@@ -89,14 +89,15 @@ router.delete('/clearCart/:userId', async (req, res, next) => {
       }
     });
 
-    currentCart.update({
-      complete: true
+    await currentCart.update({
+      completed: true
     });
 
-    user.createCart();
+    await Cart.create({userId: req.params.userId});
+    res.send('cleared');
   } catch (error) {
-    console.error(err.message);
-    next(err);
+    console.error(error.message);
+    next(error);
   }
 });
 
