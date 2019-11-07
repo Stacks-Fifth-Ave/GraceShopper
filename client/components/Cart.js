@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {removeProduct, getCart, clearProducts} from '../store/cart';
+import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters.js';
 
 class DisconnectedCart extends React.Component {
   constructor() {
@@ -25,7 +26,7 @@ class DisconnectedCart extends React.Component {
           <div key={product.info.id}>
             <img src={product.info.image} />
             <h1>{product.info.name}</h1>
-            <p>{product.info.price}</p>
+            <p>{centsToDollarString(product.info.price, DEFAULT_CURRENCY)}</p>
             <p>Quantity: {product.quantity}</p>
             <button onClick={() => this.props.remove(product)} type="submit">
               Remove
