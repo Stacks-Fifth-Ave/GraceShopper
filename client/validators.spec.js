@@ -9,6 +9,6 @@ xdescribe('email validator', () => {
     expect(emailValidator('')).is.a('boolean');
   });
   it('returns false if input does not contain an at sign (@)', () => {
-    expect(emailValidator('randomstring')).deep.equals('false');
+    expect(emailValidator('randomstring')).deep.equals(false);
   });
 });
