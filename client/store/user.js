@@ -12,10 +12,7 @@ const DELETE_USER = 'DELETE_USER';
 /**
  * INITIAL STATE
  */
-const initialState = {
-  defaultUser: {},
-  selectedUser: {}
-};
+const defaultUser = {};
 
 /**
  * ACTION CREATORS
@@ -30,7 +27,7 @@ const deletedUser = user => ({type: DELETE_USER, user});
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me');
-    dispatch(getUser(res.data || initialState.defaultUser));
+    dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
   }
@@ -75,20 +72,17 @@ export const deleteUser = user => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = initialState, action) {
+export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;
     case REMOVE_USER:
-      return initialState.defaultUser;
+      return defaultUser;
     case DELETE_USER:
-      console.log('ACTION.USER', action);
+      console.log('ACTION', action);
       console.log('STATE', state);
-      if (action.user !== state.selectedUser) {
-        return {...state};
-      } else {
-        return initialState.defaultUser;
-      }
+
+      return {...state};
 
     default:
       return state;

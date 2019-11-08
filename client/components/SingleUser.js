@@ -13,12 +13,6 @@ const SingleUser = props => {
   );
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     users: state.users
-//   };
-// };
-
 const mapDispatchToProps = dispatch => ({
   remove: user => dispatch(deleteUser(user))
 });
