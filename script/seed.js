@@ -36,10 +36,11 @@ const products = [
 ];
 
 const users = [
-  {email: 'stefanie@email.com', password: '123'},
-  {email: 'camryn@email.com', password: '123'},
-  {email: 'malka@email.com', password: '123'},
-  {email: 'andy@email.com', password: '123'}
+  {email: 'stefanie@email.com', password: '123', isAdmin: true},
+  {email: 'camryn@email.com', password: '123', isAdmin: true},
+  {email: 'malka@email.com', password: '123', isAdmin: true},
+  {email: 'andy@email.com', password: '123', isAdmin: true},
+  {email: 'cody@email.com', password: '123'}
 ];
 
 async function seed() {
