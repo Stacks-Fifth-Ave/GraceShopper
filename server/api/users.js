@@ -36,5 +36,30 @@ router.get('/:userId', async (req, res, next) => {
     next(err);
   }
 });
+//user POST route to create a new user at '/signup' located in './index.js'
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    const curUserId = req.params.userId;
+    const curUser = await User.findByPk(curUserId);
+    const updatedInfo = req.body;
+    const updatedUser = await curUser.update(updatedInfo);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.destroy({
+      where: {id: userId}
+    });
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
