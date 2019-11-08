@@ -1,5 +1,5 @@
 const {expect} = require('chai')
-const {emailValidator} = require('./validators')
+const {emailValidator, passwordValidator} = require('./validators')
 
 describe('email validator', () => {
   it('is a function', () => {
@@ -43,11 +43,11 @@ describe('email validator', () => {
     expect(
       emailValidator(
         'cody@emailemailemailemailemailemailemailemailemai' +
-          'lemailemailemailemailemailemailemailemailemailemailemailemailemaile' +
-          'mailemailemailemailemailemailemailemailemailemailemailemailemailema' +
-          'ilemailemailemailemailemailemailemailemailemailemailemailemailemail' +
-          'emailemailemailemailemailemailemailemailemailemailemailemailemailem' +
-          'ailemailemail.com'
+          'lemailemailemailemailemailemailemailemailemailemailemailemailemail' +
+          'emailemailemailemailemailemailemailemailemailemailemailemailemaile' +
+          'mailemailemailemailemailemailemailemailemailemailemailemailemailem' +
+          'ailemailemailemailemailemailemailemailemailemailemailemailemailema' +
+          'ilemailemailemail.com'
       )
     ).deep.equals(false)
     expect(emailValidator('cody@.c')).deep.equals(false)
@@ -80,5 +80,24 @@ describe('email validator', () => {
   it('fails if any DNS labels start or end with a hyphen', () => {
     expect(emailValidator('cody@-email.com')).deep.equals(false)
     expect(emailValidator('cody@email.com-')).deep.equals(false)
+  })
+})
+
+describe('password validator', () => {
+  it('is a function: ', () => {
+    expect(passwordValidator).to.be.a('function')
+  })
+  it('returns a boolean: ', () => {
+    expect(passwordValidator('', '')).is.a('boolean')
+  })
+  it('returns false if password is not between 8 and 16 characters, inclusively', () => {
+    expect(passwordValidator('hello', 'cody@email.com')).deep.equals(false)
+    expect(
+      passwordValidator('hellotheremynameiscodyiamapug', 'cody@email.com')
+    ).deep.equals(false)
+  })
+  it('returns false if password does not contain a numeric digit', () => {
+    expect(passwordValidator('andysokotwelve', 'c@g.com')).deep.equals(false)
+    expect(passwordValidator('andysoko12', 'c@g.com')).deep.equals(true)
   })
 })

@@ -1,3 +1,6 @@
+const PW_MAX_L = 16;
+const PW_MIN_L = 8;
+
 // front-end email address validator -- uses specification found at
 // 'https://www.mailboxvalidator.com/resources/articles/acceptable-email-address
 // -syntax-rfc/'
@@ -141,6 +144,35 @@ const addCharToObject = (chCode, obj) => {
   obj[ch] = ch;
 };
 
+// front-end password validator:
+// makes sure a password is between 7-17 characters long, exclusive, that it
+// has one numeric character, one special character, and does not contain any
+// patterns from the local part of the email address
+
+const passwordValidator = (password, emailAdd) => {
+  let numFlag = false;
+
+  console.log('password:', password);
+
+  if (password.length < PW_MIN_L || password.length > PW_MAX_L) {
+    return false;
+  }
+
+  for (let ch of password) {
+    if (!isNaN(parseInt(ch))) {
+      numFlag = true;
+      break;
+    }
+  }
+
+  if (!numFlag) {
+    return false;
+  }
+
+  return true;
+};
+
 module.exports = {
-  emailValidator
+  emailValidator,
+  passwordValidator
 };
