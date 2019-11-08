@@ -30,6 +30,24 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   }
 });
 
+router.get(
+  '/:userId/cartHistory',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const cartHistory = await Cart.findAll({
+        where: {
+          userId: req.params.userId,
+          completed: true
+        }
+      });
+      res.json(cartHistory);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 router.post('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const newCart = await Cart.create({

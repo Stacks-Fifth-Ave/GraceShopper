@@ -1,7 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {removeProduct, getCart, clearProducts} from '../store/cart';
 import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters.js';
+import Checkout from './Checkout';
+import CheckoutForm from './CheckoutForm';
 
 class DisconnectedCart extends React.Component {
   constructor() {
@@ -44,12 +47,10 @@ class DisconnectedCart extends React.Component {
         <p>
           Total: {centsToDollarString(this.calculateTotal(), DEFAULT_CURRENCY)}
         </p>
-        <button
-          onClick={() => this.props.clear(this.props.products)}
-          type="submit"
-        >
-          Checkout
-        </button>
+        {/* onClick={() => this.props.clear(this.props.products)}  */}
+        <Link to="/checkout">
+          <button type="submit">checkout</button>
+        </Link>
       </div>
     );
   }
