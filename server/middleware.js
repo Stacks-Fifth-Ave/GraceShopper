@@ -10,19 +10,19 @@ const isAdminMiddleware = (req, res, next) => {
     next(error);
   }
 };
-// const isCurrentUserMiddleware = (req, res, next) => {
-//   const currentUser = req.user;
-//   const urlId = req.params.userId;
-//   console.log(currentUser, urlId);
-//   if (currentUser.id !== req.params.userId){
-//     const error = new Error('Unauthorized request');
-//     error.status = 401;
-//     next(error);
-//   } else {
-//     next();
-//   }
-// };
+const isCurrentUserMiddleware = (req, res, next) => {
+  const currentUser = req.user;
+  const urlId = req.params.userId;
+  if (currentUser.id !== +req.params.userId) {
+    const error = new Error('Unauthorized request');
+    error.status = 401;
+    next(error);
+  } else {
+    next();
+  }
+};
 
 module.exports = {
-  isAdminMiddleware
+  isAdminMiddleware,
+  isCurrentUserMiddleware
 };
