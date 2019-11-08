@@ -15,7 +15,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 });
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const currentCart = await Cart.findOne({
       where: {
@@ -30,7 +30,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 });
 
-router.post('/:userId', async (req, res, next) => {
+router.post('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const newCart = await Cart.create({
       userId: req.params.userId
@@ -43,61 +43,73 @@ router.post('/:userId', async (req, res, next) => {
   }
 });
 
-router.put('/addProduct/:userId', async (req, res, next) => {
-  try {
-    const productId = req.body.productId;
-    const currentCart = await Cart.findOne({
-      where: {
-        userId: req.params.userId,
-        completed: false
-      }
-    });
+router.put(
+  '/addProduct/:userId',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const productId = req.body.productId;
+      const currentCart = await Cart.findOne({
+        where: {
+          userId: req.params.userId,
+          completed: false
+        }
+      });
 
-    currentCart.addProduct(productId);
-    res.sendStatus(201);
-  } catch (err) {
-    console.error(err.message);
-    next(err);
+      currentCart.addProduct(productId);
+      res.sendStatus(201);
+    } catch (err) {
+      console.error(err.message);
+      next(err);
+    }
   }
-});
+);
 
-router.put('/removeProduct/:userId', async (req, res, next) => {
-  try {
-    const productId = req.body.productId;
-    const currentCart = await Cart.findOne({
-      where: {
-        userId: req.params.userId,
-        completed: false
-      }
-    });
+router.put(
+  '/removeProduct/:userId',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const productId = req.body.productId;
+      const currentCart = await Cart.findOne({
+        where: {
+          userId: req.params.userId,
+          completed: false
+        }
+      });
 
-    currentCart.removeProduct(productId);
-    res.sendStatus(204);
-  } catch (err) {
-    console.error(err.message);
-    next(err);
+      currentCart.removeProduct(productId);
+      res.sendStatus(204);
+    } catch (err) {
+      console.error(err.message);
+      next(err);
+    }
   }
-});
+);
 
-router.delete('/clearCart/:userId', async (req, res, next) => {
-  try {
-    const currentCart = await Cart.findOne({
-      where: {
-        userId: req.params.userId,
-        completed: false
-      }
-    });
+router.delete(
+  '/clearCart/:userId',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const currentCart = await Cart.findOne({
+        where: {
+          userId: req.params.userId,
+          completed: false
+        }
+      });
 
-    await currentCart.update({
-      completed: true
-    });
+      await currentCart.update({
+        completed: true
+      });
 
-    await Cart.create({userId: req.params.userId});
-    res.send('cleared');
-  } catch (error) {
-    console.error(error.message);
-    next(error);
+      await Cart.create({userId: req.params.userId});
+      res.send('cleared');
+    } catch (error) {
+      console.error(error.message);
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
