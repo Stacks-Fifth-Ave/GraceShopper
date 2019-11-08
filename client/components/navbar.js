@@ -21,6 +21,7 @@ const Navbar = props => (
             Logout
           </a>
           {props.userEmail}
+          <Link to="/allUsers">Manage Users</Link>
         </div>
       ) : (
         <div>
