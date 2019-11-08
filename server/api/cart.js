@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const {Cart, User} = require('../db/models');
-
+const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 //in the case of a guest, what is the route for the cart?
 
-//router that returns current cart based on userId
-
-router.get('/', async (req, res, next) => {
+//add isAdmin middleware to see all carts
+router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
-    const carts = await Cart.findAll();
-
+    const carts = await Cart.findAll({
+      attributes: ['id', 'completed', 'userId']
+    });
     res.json(carts);
   } catch (err) {
     next(err);
@@ -23,7 +23,6 @@ router.get('/:userId', async (req, res, next) => {
         completed: false
       }
     });
-
     res.json(currentCart);
   } catch (err) {
     console.error(err.message);
