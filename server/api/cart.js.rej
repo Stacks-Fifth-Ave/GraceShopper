@@ -1,0 +1,5 @@
+diff a/server/api/cart.js b/server/api/cart.js	(rejected hunks)
+@@ -11,2 +11 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
+-      }
+-    );
++    });
