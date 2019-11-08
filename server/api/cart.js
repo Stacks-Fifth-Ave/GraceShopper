@@ -31,7 +31,7 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
 });
 
 router.get(
-  '/:userId/cartHistory',
+  '/cartHistory/:userId',
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {

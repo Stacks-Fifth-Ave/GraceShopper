@@ -16,6 +16,7 @@ const Navbar = props => (
       {props.isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
+          <Link to="/cartHistory">Order History</Link>
           <Link to="/home">User Profile</Link>
           <a href="#" onClick={props.handleClick}>
             Logout

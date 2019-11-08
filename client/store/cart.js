@@ -11,7 +11,7 @@ const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 /**
  * INITIAL STATE
  */
-let defaultCart = {products: []};
+let defaultCart = {products: [], cartHistory: []};
 
 /**
  * ACTION CREATORS
@@ -53,7 +53,7 @@ export const clearProducts = () => async dispatch => {
     if (userId) await axios.delete(`/api/cart/clearCart/${userId}`);
     dispatch(clearedProducts());
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 };
 
@@ -65,6 +65,15 @@ export const getCart = async () => {
     defaultCart = cart;
   } else {
     defaultCart = window.Storage.cart;
+  }
+};
+
+export const getCartHistory = async () => {
+  const {data} = await axios.get('auth/me');
+  const userId = data.id || 0;
+  if (userId) {
+    const cartHistory = await axios.get(`/api/cart/cartHistory/${userId}`).data;
+    defaultCart.cartHistory = [...cartHistory];
   }
 };
 
