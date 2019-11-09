@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import {runInNewContext} from 'vm';
 
 /**
  * ACTION TYPES
@@ -11,7 +12,7 @@ const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 /**
  * INITIAL STATE
  */
-let defaultCart = {products: [], cartHistory: []};
+let defaultCart = {products: []};
 
 /**
  * ACTION CREATORS
@@ -65,15 +66,6 @@ export const getCart = async () => {
     defaultCart = cart;
   } else {
     defaultCart = window.Storage.cart;
-  }
-};
-
-export const getCartHistory = async () => {
-  const {data} = await axios.get('auth/me');
-  const userId = data.id || 0;
-  if (userId) {
-    const cartHistory = await axios.get(`/api/cart/cartHistory/${userId}`).data;
-    defaultCart.cartHistory = [...cartHistory];
   }
 };
 

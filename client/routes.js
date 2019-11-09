@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Login, Signup, UserHome, Cart, CartHistory} from './components';
+import {Login, Signup, UserHome, Cart, OrderHistory} from './components';
 import {me} from './store';
 import allProducts from './components/allProducts';
 import CheckoutForm from './components/CheckoutForm';
@@ -31,7 +31,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/cartHistory" component={CartHistory} />
+            <Route path="/orders" component={OrderHistory} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
