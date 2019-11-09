@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import {runInNewContext} from 'vm';
 
 /**
  * ACTION TYPES
@@ -52,6 +53,8 @@ export const clearProducts = () => async dispatch => {
     const userId = data.id;
     if (userId) await axios.delete(`/api/cart/clearCart/${userId}`);
     dispatch(clearedProducts());
+  } catch (error) {
+    console.error(error);
   } catch (err) {
     console.error(err);
   }

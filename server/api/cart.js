@@ -31,17 +31,17 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
 });
 
 router.get(
-  '/:userId/cartHistory',
+  '/orders/:userId',
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {
-      const cartHistory = await Cart.findAll({
+      const orders = await Cart.findAll({
         where: {
           userId: req.params.userId,
           completed: true
         }
       });
-      res.json(cartHistory);
+      res.json(orders);
     } catch (err) {
       next(err);
     }
