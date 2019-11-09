@@ -55,6 +55,8 @@ export const clearProducts = () => async dispatch => {
     dispatch(clearedProducts());
   } catch (error) {
     console.error(error);
+  } catch (err) {
+    console.error(err);
   }
 };
 
