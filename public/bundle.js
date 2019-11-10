@@ -1180,11 +1180,11 @@ var PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
 var defaultCart = {
   products: [],
   paid: false
-  /**
-   * ACTION CREATORS
-   */
-
 };
+/**
+ * ACTION CREATORS
+ */
+
 var addedProduct = function addedProduct(product) {
   return {
     type: ADD_PRODUCT,
