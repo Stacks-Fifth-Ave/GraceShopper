@@ -22,7 +22,14 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
         userId: req.params.userId,
         completed: false
       },
-      include: [{model: Product}]
+      include: [
+        {
+          model: Product,
+          through: {
+            attributes: ['id', 'name', 'price', 'image']
+          }
+        }
+      ]
     });
     res.json(currentCart);
   } catch (err) {
@@ -78,7 +85,14 @@ router.put(
           userId: req.params.userId,
           completed: false
         },
-        include: [{model: Product}]
+        include: [
+          {
+            model: Product,
+            through: {
+              attributes: ['id', 'name', 'price', 'image']
+            }
+          }
+        ]
       });
       const product = await Product.findByPk(productId);
       await currentCart.addProduct(product);
