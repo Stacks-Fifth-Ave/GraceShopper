@@ -6,7 +6,7 @@ import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters';
 const SingleProduct = props => {
   // convert cents to a string to represent the value in dollars
   return (
-    <div className="single-product col">
+    <div className="center single-product col s12 m8">
       <div className="card">
         <div className="card-image center">
           <img className="single-product-image" src={props.product.image} />
