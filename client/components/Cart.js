@@ -47,9 +47,14 @@ class DisconnectedCart extends React.Component {
         <p>
           Total: {centsToDollarString(this.calculateTotal(), DEFAULT_CURRENCY)}
         </p>
-        {/* onClick={() => this.props.clear(this.props.products)}*/}
+
         <Link to="/checkout">
-          <button type="submit">checkout</button>
+          <button
+            type="submit"
+            onClick={() => this.props.clear(this.props.products)}
+          >
+            checkout
+          </button>
         </Link>
       </div>
     );
