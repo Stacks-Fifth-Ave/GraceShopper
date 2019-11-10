@@ -316,7 +316,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card-image center"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          classname: "single-product-image",
+          className: "single-product-image",
           src: product.info.image
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "card-title"
