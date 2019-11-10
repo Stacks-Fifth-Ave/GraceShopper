@@ -66,7 +66,7 @@ class DisconnectedCart extends React.Component {
             <button
               className="waves-effect waves-light btn-large"
               type="submit"
-              onClick={() => props.submit(props.product)}
+              onClick={() => this.props.clear(this.props.products)}
             >
               checkout
             </button>
@@ -88,7 +88,7 @@ const mapDispatchToProps = dispatch => {
   return {
     remove: product => dispatch(removeProduct(product)),
     clear: products => dispatch(clearProducts(products)),
-    getCart: dispatch(getCart())
+    getCart: () => dispatch(getCart())
   };
 };
 
