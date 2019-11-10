@@ -45,9 +45,11 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) {await axios.put(`/api/cart/removeProduct/${userId}`, {
+    if (userId) {
+      await axios.put(`/api/cart/removeProduct/${userId}`, {
         productId: product.id
-      });}
+      });
+    }
     dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
@@ -68,7 +70,8 @@ export const clearProducts = () => async dispatch => {
 export const getCart = () => async dispatch => {
   const {data} = await axios.get('/auth/me');
   const userId = data.id || 0;
-  if (userId) {
+  //get backend cart when a user is logged in and front end cart is empty (ex, on refresh)
+  if (userId && !store.getState().cart.products.length) {
     const {data} = await axios.get(`/api/cart/${userId}`);
     const cart = data.products.map(product => {
       return {
@@ -77,7 +80,9 @@ export const getCart = () => async dispatch => {
       };
     });
     dispatch(gotCart(cart));
-  } else {
+    //get from storage if user is not logged in and state is empty (ex, on refresh)
+    //does not actually work yet
+  } else if (!userId && store.getState().cart.products.length) {
     defaultCart = window.Storage.cart;
   }
 };
