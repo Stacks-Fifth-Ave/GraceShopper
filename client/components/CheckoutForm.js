@@ -44,7 +44,11 @@ class CheckoutForm extends React.Component {
           />
         </div>
         <div>
-          <button type="submit" onClick={this.handleSubmit}>
+          <button
+            className="waves-effect waves-light btn-large"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
             Submit
           </button>
         </div>
