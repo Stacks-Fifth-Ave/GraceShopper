@@ -360,7 +360,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clear: function clear(products) {
       return dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["clearProducts"])(products));
-    }
+    },
+    getCart: dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["getCart"])())
   };
 };
 
@@ -1432,7 +1433,7 @@ socket.on('connect', function () {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: addedProduct, removedProduct, clearedProducts, paymentSuccessed, addProduct, removeProduct, clearProducts, getCart, paymentSuccess, default */
+/*! exports provided: addedProduct, removedProduct, clearedProducts, paymentSuccessed, gotCart, addProduct, removeProduct, clearProducts, getCart, paymentSuccess, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1441,6 +1442,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removedProduct", function() { return removedProduct; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearedProducts", function() { return clearedProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "paymentSuccessed", function() { return paymentSuccessed; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gotCart", function() { return gotCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addProduct", function() { return addProduct; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeProduct", function() { return removeProduct; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearProducts", function() { return clearProducts; });
@@ -1482,6 +1484,7 @@ var ADD_PRODUCT = 'ADD_PRODUCT';
 var REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 var CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 var PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
+var LOAD_CART = 'LOAD_CART';
 /**
  * INITIAL STATE
  */
@@ -1489,11 +1492,11 @@ var PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
 var defaultCart = {
   products: [],
   paid: false
-};
-/**
- * ACTION CREATORS
- */
+  /**
+   * ACTION CREATORS
+   */
 
+};
 var addedProduct = function addedProduct(product) {
   return {
     type: ADD_PRODUCT,
@@ -1514,6 +1517,12 @@ var clearedProducts = function clearedProducts() {
 var paymentSuccessed = function paymentSuccessed() {
   return {
     type: PAYMENT_SUCCESS
+  };
+};
+var gotCart = function gotCart(products) {
+  return {
+    type: LOAD_CART,
+    products: products
   };
 };
 /**
@@ -1548,7 +1557,9 @@ var addProduct = function addProduct(product) {
                 }
 
                 _context.next = 9;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/addProduct/".concat(userId));
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/addProduct/".concat(userId), {
+                  productId: product.id
+                });
 
               case 9:
                 dispatch(addedProduct(product));
@@ -1602,7 +1613,9 @@ var removeProduct = function removeProduct(product) {
                 }
 
                 _context2.next = 9;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/removeProduct/".concat(userId));
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/removeProduct/".concat(userId), {
+                  productId: product.id
+                });
 
               case 9:
                 dispatch(removedProduct(product));
@@ -1682,45 +1695,69 @@ var clearProducts = function clearProducts() {
     }()
   );
 };
-var getCart =
-/*#__PURE__*/
-function () {
-  var _ref7 = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee4() {
-    var _ref8, data, userId, cart;
+var getCart = function getCart() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref7 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var _ref8, data, userId, _ref9, _data, cart;
 
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/auth/me');
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/auth/me');
 
-          case 2:
-            _ref8 = _context4.sent;
-            data = _ref8.data;
-            userId = data.id || 0;
+              case 2:
+                _ref8 = _context4.sent;
+                data = _ref8.data;
+                userId = data.id || 0; //get backend cart when a user is logged in and front end cart is empty (ex, on refresh)
 
-            if (userId) {
-              cart = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/cart/".concat(userId)).data;
-              defaultCart = cart;
-            } else {
-              defaultCart = window.Storage.cart;
+                if (!(userId && !_index__WEBPACK_IMPORTED_MODULE_2__["default"].getState().cart.products.length)) {
+                  _context4.next = 14;
+                  break;
+                }
+
+                _context4.next = 8;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/cart/".concat(userId));
+
+              case 8:
+                _ref9 = _context4.sent;
+                _data = _ref9.data;
+                cart = _data.products.map(function (product) {
+                  return {
+                    info: product,
+                    quantity: 1
+                  };
+                });
+                dispatch(gotCart(cart)); //get from storage if user is not logged in and state is empty (ex, on refresh)
+                //does not actually work yet
+
+                _context4.next = 15;
+                break;
+
+              case 14:
+                if (!userId && _index__WEBPACK_IMPORTED_MODULE_2__["default"].getState().cart.products.length) {
+                  defaultCart = window.Storage.cart;
+                }
+
+              case 15:
+              case "end":
+                return _context4.stop();
             }
+          }
+        }, _callee4);
+      }));
 
-          case 6:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4);
-  }));
-
-  return function getCart() {
-    return _ref7.apply(this, arguments);
-  };
-}();
+      return function (_x4) {
+        return _ref7.apply(this, arguments);
+      };
+    }()
+  );
+};
 var paymentSuccess = function paymentSuccess() {
   _index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(paymentSuccessed());
 };
@@ -1799,6 +1836,11 @@ var paymentSuccess = function paymentSuccess() {
     case PAYMENT_SUCCESS:
       return _objectSpread({}, cart, {
         paid: true
+      });
+
+    case LOAD_CART:
+      return _objectSpread({}, cart, {
+        products: action.products
       });
 
     default:
@@ -2104,6 +2146,7 @@ var auth = function auth(email, password, method) {
               case 9:
                 try {
                   dispatch(getUser(res.data));
+                  dispatch(Object(_cart__WEBPACK_IMPORTED_MODULE_2__["getCart"])());
                   _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/home');
                 } catch (dispatchOrHistoryErr) {
                   console.error(dispatchOrHistoryErr);
@@ -61648,9 +61691,11 @@ var STRIPE_PUBLISHABLE = 'pk_test_4lXR0JhvWlkXxVxJOlrfE1vu00Hu5oqYHA'; // const 
 // export default PAYMENT_SERVER_URL;
 
 var PAYMENT_SERVER_URL = 'http://localhost:8081';
+var HEROKU_API_KEY = '39cfee44-873a-48f4-977b-2496697b4a35';
 module.exports = {
   STRIPE_PUBLISHABLE: STRIPE_PUBLISHABLE,
-  PAYMENT_SERVER_URL: PAYMENT_SERVER_URL
+  PAYMENT_SERVER_URL: PAYMENT_SERVER_URL,
+  HEROKU_API_KEY: HEROKU_API_KEY
 };
 
 /***/ }),
