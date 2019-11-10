@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import store from './index';
 import {runInNewContext} from 'vm';
 
 /**
@@ -8,11 +9,12 @@ import {runInNewContext} from 'vm';
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
+const PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
 
 /**
  * INITIAL STATE
  */
-let defaultCart = {products: []};
+let defaultCart = {products: [], paid: false};
 
 /**
  * ACTION CREATORS
@@ -20,6 +22,7 @@ let defaultCart = {products: []};
 export const addedProduct = product => ({type: ADD_PRODUCT, product});
 export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
 export const clearedProducts = () => ({type: CLEAR_PRODUCTS});
+export const paymentSuccessed = () => ({type: PAYMENT_SUCCESS});
 
 /**
  * THUNK CREATORS
@@ -55,8 +58,6 @@ export const clearProducts = () => async dispatch => {
     dispatch(clearedProducts());
   } catch (error) {
     console.error(error);
-  } catch (err) {
-    console.error(err);
   }
 };
 
@@ -69,6 +70,10 @@ export const getCart = async () => {
   } else {
     defaultCart = window.Storage.cart;
   }
+};
+
+export const paymentSuccess = () => {
+  store.dispatch(paymentSuccessed());
 };
 
 /**
@@ -126,6 +131,8 @@ export default function(cart = defaultCart, action) {
       }
     case CLEAR_PRODUCTS:
       return {...cart, products: []};
+    case PAYMENT_SUCCESS:
+      return {...cart, paid: true};
     default:
       return cart;
   }
