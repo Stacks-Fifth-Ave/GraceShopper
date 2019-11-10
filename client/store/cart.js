@@ -10,6 +10,7 @@ const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 const PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
+const LOAD_CART = 'LOAD_CART';
 
 /**
  * INITIAL STATE
@@ -23,6 +24,7 @@ export const addedProduct = product => ({type: ADD_PRODUCT, product});
 export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
 export const clearedProducts = () => ({type: CLEAR_PRODUCTS});
 export const paymentSuccessed = () => ({type: PAYMENT_SUCCESS});
+export const gotCart = products => ({type: LOAD_CART, products});
 
 /**
  * THUNK CREATORS
@@ -32,7 +34,7 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) await axios.put(`/api/cart/addProduct/${userId}`);
+    if (userId) await axios.put(`/api/cart/addProduct/${userId}`, {productId: product.id});
     dispatch(addedProduct(product));
   } catch (err) {
     console.error(err);
@@ -43,7 +45,9 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
+    if (userId) {await axios.put(`/api/cart/removeProduct/${userId}`, {
+        productId: product.id
+      });}
     dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
@@ -61,12 +65,18 @@ export const clearProducts = () => async dispatch => {
   }
 };
 
-export const getCart = async () => {
+export const getCart = () => async dispatch => {
   const {data} = await axios.get('/auth/me');
   const userId = data.id || 0;
   if (userId) {
-    const cart = axios.get(`/api/cart/${userId}`).data;
-    defaultCart = cart;
+    const {data} = await axios.get(`/api/cart/${userId}`);
+    const cart = data.products.map(product => {
+      return {
+        info: product,
+        quantity: 1
+      };
+    });
+    dispatch(gotCart(cart));
   } else {
     defaultCart = window.Storage.cart;
   }
@@ -133,6 +143,8 @@ export default function(cart = {products: [], paid: false}, action) {
       return {...cart, products: []};
     case PAYMENT_SUCCESS:
       return {...cart, paid: true};
+    case LOAD_CART:
+      return {...cart, products: action.products};
     default:
       return cart;
   }

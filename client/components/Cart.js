@@ -12,9 +12,7 @@ class DisconnectedCart extends React.Component {
     this.calculateTotal = this.calculateTotal.bind(this);
   }
 
-  componentDidMount() {
-    getCart();
-  }
+  componentDidMount() {}
 
   calculateTotal() {
     return this.props.products.reduce((total, product) => {
@@ -71,7 +69,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     remove: product => dispatch(removeProduct(product)),
-    clear: products => dispatch(clearProducts(products))
+    clear: products => dispatch(clearProducts(products)),
+    getCart: dispatch(getCart())
   };
 };
 
