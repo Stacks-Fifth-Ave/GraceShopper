@@ -72,17 +72,13 @@ export const deleteUser = user => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function(user = {}, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;
     case REMOVE_USER:
       return defaultUser;
-    case DELETE_USER:
-      console.log('ACTION', action);
-      console.log('STATE', state);
-      return {...state};
     default:
-      return state;
+      return user;
   }
 }
