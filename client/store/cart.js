@@ -79,7 +79,7 @@ export const paymentSuccess = () => {
 /**
  * REDUCER
  */
-export default function(cart = defaultCart, action) {
+export default function(cart = {products: [], paid: false}, action) {
   switch (action.type) {
     case ADD_PRODUCT:
       const product = {info: action.product, quantity: 1};

@@ -5,10 +5,10 @@ import {getOrders} from '../store/orderHistory';
 
 class DisconnectedOrderHistory extends React.Component {
   componentDidMount() {
-    getOrders();
+    this.props.getOrders();
   }
   render() {
-    console.log(this.props.orders);
+    // console.log(this.props.orders);
     if (!this.props.orders.length) {
       return (
         <div>
@@ -16,7 +16,13 @@ class DisconnectedOrderHistory extends React.Component {
         </div>
       );
     }
-    return <div>{this.props.orders.map(order => order.id)}</div>;
+    return (
+      <div>
+        {this.props.orders.map(order => (
+          <div key={order.id}>Order number:{order.id}</div>
+        ))}
+      </div>
+    );
   }
 }
 
