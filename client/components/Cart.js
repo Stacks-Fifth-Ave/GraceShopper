@@ -66,7 +66,6 @@ class DisconnectedCart extends React.Component {
             <button
               className="waves-effect waves-light btn-large"
               type="submit"
-            >
               checkout
             </button>
           </Link>
