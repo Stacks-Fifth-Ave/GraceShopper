@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => {
   return {
     remove: product => dispatch(removeProduct(product)),
     clear: products => dispatch(clearProducts(products)),
-    getCart: () => dispatch(getCart())
+    getCart: dispatch(getCart())
   };
 };
 
