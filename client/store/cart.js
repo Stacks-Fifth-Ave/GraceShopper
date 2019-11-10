@@ -73,7 +73,6 @@ export const getCart = async () => {
 };
 
 export const paymentSuccess = () => {
-  console.log('in here');
   store.dispatch(paymentSuccessed());
 };
 
