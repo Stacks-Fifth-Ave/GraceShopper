@@ -1,41 +1,64 @@
 import React from 'react';
+import Checkout from './Checkout';
+import {clearProducts} from '../store/cart';
+import {connect} from 'react-redux';
 
-const CheckoutForm = props => {
-  const {name, displayName, error} = props;
+class CheckoutForm extends React.Component {
+  handleSubmit = e => {
+    e.preventDefault();
+    if (this.props.paid) {
+      this.props.clearProducts();
+    } else {
+      alert('please enter a valid card');
+    }
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+  render() {
+    return (
+      <div>
+        <form name={name}>
+          <div>
+            <label>
+              <small>First Name</small>
+            </label>
+            <input name="firstName" type="text" />
+          </div>
+          <div>
+            <label>
+              <small>Last Name</small>
+            </label>
+            <input name="lastName" type="text" />
+          </div>
+          <div>
+            <label htmlFor="address">
+              <small>Address</small>
+            </label>
+            <input name="address" type="text" />
+          </div>
+        </form>
         <div>
-          <label>
-            <small>First Name</small>
-          </label>
-          <input name="firstName" type="text" />
+          <Checkout
+            name="Checkout"
+            description="enter you account email"
+            amount={1}
+          />
         </div>
         <div>
-          <label>
-            <small>Last Name</small>
-          </label>
-          <input name="lastName" type="text" />
+          <button type="submit" onClick={this.handleSubmit}>
+            Submit
+          </button>
         </div>
-        <div>
-          <label htmlFor="address">
-            <small>Address</small>
-          </label>
-          <input name="address" type="text" />
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
-const handleSubmit = e => {
-  e.preventDefault();
-  console.log('checked out');
-};
+const mapStateToProps = state => ({
+  paid: state.cart.paid
+});
 
-export default CheckoutForm;
+const mapDispatchToProps = dispatch => ({
+  clearProducts: () => dispatch(clearProducts())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm);
