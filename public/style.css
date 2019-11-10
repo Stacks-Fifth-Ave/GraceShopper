@@ -10,17 +10,31 @@ label {
   display: block;
 }
 
-nav {
-  display: flex;
-}
+/* nav {
+  color: pink;
+} */
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-  flex-direction: row;
+.nav-wrapper {
+  background-color: rgb(110, 143, 159) !important;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.app {
+  margin: 50px;
+}
+
+/* .card {
+  width:300px !important;
+  height: 300px !important;
+  margin: 30px !important;
+} */
+
+button {
+  background-color: rgb(110, 143, 159) !important;
 }

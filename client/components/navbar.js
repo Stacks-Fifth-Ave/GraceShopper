@@ -6,35 +6,62 @@ import {logout} from '../store';
 
 // temporarily taking implicit return out of this functional compoent
 const Navbar = props => (
-  <div>
-    <h1>Stacks Fifth Avenue</h1>
-    <nav>
-      <div>
-        <Link to="/cart">Cart</Link>
-        <Link to="/allProducts">All Products</Link>
-      </div>
-      {props.isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/orders">Order History</Link>
-          <Link to="/home">User Profile</Link>
-          <a href="#" onClick={props.handleClick}>
-            Logout
-          </a>
-          {props.userEmail}
-          <Link to="/allUsers">Manage Users</Link>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          Guest
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+  <nav>
+    <div className="nav-wrapper">
+      <a href="#" className="brand-logo right">
+        Stacks Fifth Avenue
+      </a>
+      <ul id="nav-mobile" className="left hide-on-med-and-down">
+        <li>
+          <div>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link to="/allProducts">All Products</Link>
+            </li>
+          </div>
+        </li>
+        {props.isLoggedIn ? (
+          <li>
+            <div>
+              {/* The navbar will show these links after you log in */}
+              <li>
+                <Link to="/orders">Order History</Link>
+              </li>
+              <li>
+                <Link to="/home">User Profile</Link>
+              </li>
+              <li>
+                <Link to="/allUsers">Manage Users</Link>
+              </li>
+              <li>
+                <a href="#" onClick={props.handleClick}>
+                  Logout
+                </a>
+              </li>
+              <li className="hide-on-large-and-down">
+                Logged in as {props.userEmail}
+              </li>
+            </div>
+          </li>
+        ) : (
+          <li>
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+              <li>Viewing as guest</li>
+            </div>
+          </li>
+        )}
+      </ul>
+    </div>
+  </nav>
 );
 
 /**
