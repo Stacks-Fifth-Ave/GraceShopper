@@ -81,9 +81,7 @@ export default function(state = defaultUser, action) {
     case DELETE_USER:
       console.log('ACTION', action);
       console.log('STATE', state);
-
       return {...state};
-
     default:
       return state;
   }
