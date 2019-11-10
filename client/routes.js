@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {Login, Signup, UserHome, Cart, OrderHistory} from './components';
 import {me} from './store';
 import allProducts from './components/allProducts';
-import AllUsers from './components/allUsers';
+import AllUsers from './components/AllUsers';
 import CheckoutForm from './components/CheckoutForm';
 
 /**
