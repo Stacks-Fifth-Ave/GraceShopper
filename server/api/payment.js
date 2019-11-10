@@ -15,4 +15,8 @@ router.post('/', (req, res) => {
   stripe.charges.create(req.body, postStripeCharge(res));
 });
 
+router.get('/', (req, res) => {
+  res.send('hii');
+});
+
 module.exports = router;
