@@ -55,7 +55,7 @@ export const clearProducts = () => async dispatch => {
     const userId = data.id;
     if (userId) await axios.delete(`/api/cart/clearCart/${userId}`);
     dispatch(clearedProducts());
-  } catch (error) {
+  } catch (err) {
     console.error(err);
   }
 };

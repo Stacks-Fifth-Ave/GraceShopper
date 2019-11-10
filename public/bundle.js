@@ -624,6 +624,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+/* harmony import */ var _validators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../validators */ "./client/validators.js");
+/* harmony import */ var _validators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_validators__WEBPACK_IMPORTED_MODULE_4__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -632,30 +655,71 @@ __webpack_require__.r(__webpack_exports__);
  * COMPONENT
  */
 
-var AuthForm = function AuthForm(props) {
-  var name = props.name,
-      displayName = props.displayName,
-      handleSubmit = props.handleSubmit,
-      error = props.error;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: handleSubmit,
-    name: name
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "email"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "email",
-    type: "text"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "password"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "password",
-    type: "password"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit"
-  }, displayName)), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/auth/google"
-  }, displayName, " with Google"));
-};
+var AuthForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AuthForm, _React$Component);
+
+  function AuthForm() {
+    var _this;
+
+    _classCallCheck(this, AuthForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AuthForm).call(this));
+    _this.state = {
+      email: '',
+      password: '',
+      validEmail: true
+    };
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(AuthForm, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _this$setState;
+
+      var name = event.target.name;
+      var value = event.target.value;
+      var validator = 'valid' + name[0].toUpperCase() + name.slice(1);
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, name, value), _defineProperty(_this$setState, validator, Object(_validators__WEBPACK_IMPORTED_MODULE_4__["emailValidator"])(value)), _this$setState));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          name = _this$props.name,
+          displayName = _this$props.displayName,
+          handleSubmit = _this$props.handleSubmit,
+          error = _this$props.error;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: handleSubmit,
+        name: name
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "email"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "email",
+        type: "text",
+        value: this.state.email,
+        onChange: this.handleChange
+      }), this.state.email === '' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.validEmail ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u2705") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u274C"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "password"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "password",
+        type: "password",
+        value: this.state.password,
+        onChange: this.handleChange
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, displayName)), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/auth/google"
+      }, displayName, " with Google"));
+    }
+  }]);
+
+  return AuthForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 /**
  * CONTAINER
  *   Note that we have two different sets of 'mapStateToProps' functions -
@@ -1180,11 +1244,11 @@ var PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
 var defaultCart = {
   products: [],
   paid: false
-};
-/**
- * ACTION CREATORS
- */
+  /**
+   * ACTION CREATORS
+   */
 
+};
 var addedProduct = function addedProduct(product) {
   return {
     type: ADD_PRODUCT,
@@ -1357,7 +1421,7 @@ var clearProducts = function clearProducts() {
               case 12:
                 _context3.prev = 12;
                 _context3.t0 = _context3["catch"](0);
-                console.error(err);
+                console.error(_context3.t0);
 
               case 15:
               case "end":
@@ -1748,6 +1812,268 @@ var logout = function logout() {
       return state;
   }
 });
+
+/***/ }),
+
+/***/ "./client/validators.js":
+/*!******************************!*\
+  !*** ./client/validators.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var PW_MAX_L = 16;
+var PW_MIN_L = 8; // front-end email address validator -- uses specification found at
+// 'https://www.mailboxvalidator.com/resources/articles/acceptable-email-address
+// -syntax-rfc/'
+// figured it would take just as long to learn RegEx well enough to validate an
+// email address instead of simply using JavaScript functions or loops to
+// accomplish the same thing -- each failing conditional has a comment
+
+var emailValidator = function emailValidator(emailAdd) {
+  var validLocalChars = {};
+  var validDnsLabelChars = {};
+  var local = '';
+  var domain = '';
+  var atIndex = null;
+  var dotIndex = null;
+  var domainArr = [];
+  var tld = ''; // populate valid characters:
+  // numeric is valid in both local and DNS label:
+  // (by ASCII code)
+
+  for (var i = 48; i <= 57; i++) {
+    addCharToObject(i, validLocalChars);
+    addCharToObject(i, validDnsLabelChars);
+  } // all alphabetic characters are valid in both local and DNS label
+
+
+  for (var _i = 65; _i <= 90; _i++) {
+    addCharToObject(_i, validLocalChars);
+    addCharToObject(_i + 32, validLocalChars);
+    addCharToObject(_i, validDnsLabelChars);
+    addCharToObject(_i + 32, validDnsLabelChars);
+  } // DNS labels can have a hypen:
+
+
+  validDnsLabelChars['-'] = '-'; // local part has a bunch of special characters I rarely or never see in
+  // actual email addresses:
+
+  validLocalChars['!'] = '!';
+  validLocalChars['#'] = '#';
+  validLocalChars.$ = '$';
+  validLocalChars['%'] = '%';
+  validLocalChars['&'] = '&';
+  validLocalChars["'"] = "'";
+  validLocalChars['*'] = '*';
+  validLocalChars['+'] = '+';
+  validLocalChars['-'] = '-';
+  validLocalChars['/'] = '/';
+  validLocalChars['='] = '=';
+  validLocalChars['?'] = '?';
+  validLocalChars['^'] = '^';
+  validLocalChars._ = '_';
+  validLocalChars['`'] = '`';
+  validLocalChars['.'] = '.';
+  validLocalChars['{'] = '}';
+  validLocalChars['|'] = '|';
+  validLocalChars['}'] = '}';
+  validLocalChars['~'] = '~'; // done populating valid character objects
+  // if emailAdd does not contain an @ symbol:
+
+  if (!emailAdd.includes('@')) {
+    return false;
+  }
+
+  atIndex = emailAdd.indexOf('@');
+  local = emailAdd.slice(0, atIndex); // if local is not between 0 and 64 characters long, exclusive:
+
+  if (local.length > 63 || local.length < 1) {
+    return false;
+  }
+
+  domain = emailAdd.slice(atIndex + 1); // if domain is not between 2 and 256 characters long, exclusive:
+
+  if (domain.length > 255 || domain.length < 3) {
+    return false;
+  }
+
+  domainArr = domain.split('.'); // if domainArr has a length of less than two, that means there is no period
+  // in the domain, which is a required character:
+
+  if (domainArr.length < 2) {
+    return false;
+  } // if any DNS label is not between 0 and 64 characters long, exclusive,
+  // and while I'm looping through them I might as well make sure there are no
+  // invalid characters -- also while hyphens are permitted they cannot be the
+  // first or last character of a label
+
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = domainArr[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var dnsLabel = _step.value;
+
+      if (dnsLabel.length > 63 || dnsLabel.length < 1) {
+        return false;
+      }
+
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = dnsLabel[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var ch = _step3.value;
+
+          if (validDnsLabelChars[ch] === undefined) {
+            return false;
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      if (dnsLabel[0] === '-' || dnsLabel[dnsLabel.length - 1] === '-') {
+        return false;
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  tld = domainArr[domainArr.length - 1]; // if the top level domain is numeric:
+
+  if (!isNaN(tld)) {
+    return false;
+  } // if local part contains an invalid character:
+
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = local[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _ch = _step2.value;
+
+      if (validLocalChars[_ch] === undefined) {
+        return false;
+      }
+    } // if local part starts with a period or ends with a period:
+
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+        _iterator2["return"]();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  if (local[0] === '.' || local[local.length - 1] === '.') {
+    return false;
+  } // if local part has two (or more) periods in a row:
+
+
+  for (var _i2 = 2; _i2 < local.length - 1; _i2++) {
+    if (local[_i2 - 1] === '.' && local[_i2] === '.') {
+      return false;
+    }
+  }
+
+  return true;
+}; // helper for email validator -- takes a charcode and object and inserts
+// actual character as both key and value
+
+
+var addCharToObject = function addCharToObject(chCode, obj) {
+  var ch = String.fromCharCode(chCode);
+  obj[ch] = ch;
+}; // front-end password validator:
+// makes sure a password is between 7-17 characters long, exclusive, that it
+// has one numeric character, one special character, and does not contain any
+// patterns from the local part of the email address
+
+
+var passwordValidator = function passwordValidator(password, emailAdd) {
+  var numFlag = false;
+  console.log('password:', password);
+
+  if (password.length < PW_MIN_L || password.length > PW_MAX_L) {
+    return false;
+  }
+
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
+
+  try {
+    for (var _iterator4 = password[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var ch = _step4.value;
+
+      if (!isNaN(parseInt(ch))) {
+        numFlag = true;
+        break;
+      }
+    }
+  } catch (err) {
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+        _iterator4["return"]();
+      }
+    } finally {
+      if (_didIteratorError4) {
+        throw _iteratorError4;
+      }
+    }
+  }
+
+  if (!numFlag) {
+    return false;
+  }
+
+  return true;
+};
+
+module.exports = {
+  emailValidator: emailValidator,
+  passwordValidator: passwordValidator
+};
 
 /***/ }),
 
