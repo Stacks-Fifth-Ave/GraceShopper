@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Cart, User} = require('../db/models');
+const {Cart, User, Product} = require('../db/models');
 const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 //in the case of a guest, what is the route for the cart?
 
@@ -36,6 +36,11 @@ router.get(
   async (req, res, next) => {
     try {
       const orders = await Cart.findAll({
+        include: [
+          {
+            model: Product
+          }
+        ],
         where: {
           userId: req.params.userId,
           completed: true
@@ -73,8 +78,8 @@ router.put(
           completed: false
         }
       });
-
-      currentCart.addProduct(productId);
+      const product = await Product.findByPk(productId);
+      currentCart.addProduct(product);
       res.sendStatus(201);
     } catch (err) {
       console.error(err.message);
@@ -95,8 +100,8 @@ router.put(
           completed: false
         }
       });
-
-      currentCart.removeProduct(productId);
+      const product = await Product.findByPk(productId);
+      currentCart.removeProduct(product);
       res.sendStatus(204);
     } catch (err) {
       console.error(err.message);
