@@ -30,30 +30,46 @@ class DisconnectedCart extends React.Component {
       );
     }
     return (
-      <div>
+      <div className="col">
         {this.props.products.map(product => (
-          <div key={product.info.id}>
-            <img src={product.info.image} />
-            <h1>{product.info.name}</h1>
-            <p>{centsToDollarString(product.info.price, DEFAULT_CURRENCY)}</p>
-            <p>Quantity: {product.quantity}</p>
-            <button onClick={() => this.props.remove(product)} type="submit">
-              Remove
-            </button>
+          <div className="card" key={product.info.id}>
+            <div className="card-image center">
+              <img className="single-product-image" src={product.info.image} />
+              <span className="card-title">
+                {product.info.name} - Quantity: {product.quantity} - Cost per
+                item {centsToDollarString(product.info.price, DEFAULT_CURRENCY)}{' '}
+                - Total cost:{' '}
+                {centsToDollarString(
+                  product.info.price * product.quantity,
+                  DEFAULT_CURRENCY
+                )}
+              </span>
+            </div>
+            <div className="card-action center">
+              <button
+                className="waves-effect waves-light btn-large"
+                onClick={() => this.props.remove(product)}
+                type="submit"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         ))}
-        <p>
+        <h2>
           Total: {centsToDollarString(this.calculateTotal(), DEFAULT_CURRENCY)}
-        </p>
-
-        <Link to="/checkout">
-          <button
-            type="submit"
-            onClick={() => this.props.clear(this.props.products)}
-          >
-            checkout
-          </button>
-        </Link>
+        </h2>
+        <div className="card-action center">
+          <Link to="/checkout">
+            <button
+              className="waves-effect waves-light btn-large"
+              type="submit"
+              onClick={() => props.submit(props.product)}
+            >
+              checkout
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
