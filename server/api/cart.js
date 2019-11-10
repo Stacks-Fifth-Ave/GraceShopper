@@ -21,7 +21,8 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
       where: {
         userId: req.params.userId,
         completed: false
-      }
+      },
+      include: [{model: Product}]
     });
     res.json(currentCart);
   } catch (err) {
@@ -76,10 +77,11 @@ router.put(
         where: {
           userId: req.params.userId,
           completed: false
-        }
+        },
+        include: [{model: Product}]
       });
       const product = await Product.findByPk(productId);
-      currentCart.addProduct(product);
+      await currentCart.addProduct(product);
       res.sendStatus(201);
     } catch (err) {
       console.error(err.message);
