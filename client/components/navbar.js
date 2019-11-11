@@ -12,46 +12,54 @@ const Navbar = props => (
         Stacks Fifth Avenue
       </a>
       <ul id="nav-mobile" className="left hide-on-med-and-down">
-        <div>
-          <li>
-            <Link to="/cart">Cart</Link>
-          </li>
-          <li>
-            <Link to="/allProducts">All Products</Link>
-          </li>
-        </div>
+        <li>
+          <div>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link to="/allProducts">All Products</Link>
+            </li>
+          </div>
+        </li>
         {props.isLoggedIn ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <li>
-              <Link to="/orders">Order History</Link>
-            </li>
-            <li>
-              <Link to="/home">User Profile</Link>
-            </li>
-            <li>
-              <Link to="/allUsers">Manage Users</Link>
-            </li>
-            <li>
-              <a href="#" onClick={props.handleClick}>
-                Logout
-              </a>
-            </li>
-            <li className="hide-on-large-and-down">
-              Logged in as {props.userEmail}
-            </li>
-          </div>
+          <li>
+            <div>
+              {/* The navbar will show these links after you log in */}
+              <li>
+                <Link to="/orders">Order History</Link>
+              </li>
+              <li>
+                <Link to="/home">User Profile</Link>
+              </li>
+              {props.isAdmin ? (
+                <li>
+                  <Link to="/allUsers">Manage Users</Link>
+                </li>
+              ) : null}
+              <li>
+                <a href="#" onClick={props.handleClick}>
+                  Logout
+                </a>
+              </li>
+              <li>{props.userEmail}</li>
+            </div>
+          </li>
         ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-            <li>Viewing as guest</li>
-          </div>
+          <li>
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+              <li>
+                <Link />Guest
+              </li>
+            </div>
+          </li>
         )}
       </ul>
     </div>
@@ -64,7 +72,8 @@ const Navbar = props => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    userEmail: state.user.email
+    userEmail: state.user.email,
+    isAdmin: state.user.isAdmin
   };
 };
 
