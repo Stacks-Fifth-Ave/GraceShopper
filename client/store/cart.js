@@ -1,5 +1,7 @@
 import axios from 'axios';
 import history from '../history';
+import store from './index';
+import {runInNewContext} from 'vm';
 
 /**
  * ACTION TYPES
@@ -7,11 +9,13 @@ import history from '../history';
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
+const PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
+const LOAD_CART = 'LOAD_CART';
 
 /**
  * INITIAL STATE
  */
-let defaultCart = {products: []};
+let defaultCart = {products: [], paid: false};
 
 /**
  * ACTION CREATORS
@@ -19,6 +23,8 @@ let defaultCart = {products: []};
 export const addedProduct = product => ({type: ADD_PRODUCT, product});
 export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
 export const clearedProducts = () => ({type: CLEAR_PRODUCTS});
+export const paymentSuccessed = () => ({type: PAYMENT_SUCCESS});
+export const gotCart = products => ({type: LOAD_CART, products});
 
 /**
  * THUNK CREATORS
@@ -28,7 +34,7 @@ export const addProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) await axios.put(`/api/cart/addProduct/${userId}`);
+    if (userId) await axios.put(`/api/cart/addProduct/${userId}`, {productId: product.id});
     dispatch(addedProduct(product));
   } catch (err) {
     console.error(err);
@@ -39,7 +45,11 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) await axios.put(`/api/cart/removeProduct/${userId}`);
+    if (userId) {
+      await axios.put(`/api/cart/removeProduct/${userId}`, {
+        productId: product.id
+      });
+    }
     dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
@@ -52,26 +62,39 @@ export const clearProducts = () => async dispatch => {
     const userId = data.id;
     if (userId) await axios.delete(`/api/cart/clearCart/${userId}`);
     dispatch(clearedProducts());
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-export const getCart = async () => {
+export const getCart = () => async dispatch => {
   const {data} = await axios.get('/auth/me');
   const userId = data.id || 0;
-  if (userId) {
-    const cart = axios.get(`/api/cart/${userId}`).data;
-    defaultCart = cart;
-  } else {
+  //get backend cart when a user is logged in and front end cart is empty (ex, on refresh)
+  if (userId && !store.getState().cart.products.length) {
+    const {data} = await axios.get(`/api/cart/${userId}`);
+    const cart = data.products.map(product => {
+      return {
+        info: product,
+        quantity: 1
+      };
+    });
+    dispatch(gotCart(cart));
+    //get from storage if user is not logged in and state is empty (ex, on refresh)
+    //does not actually work yet
+  } else if (!userId && store.getState().cart.products.length) {
     defaultCart = window.Storage.cart;
   }
+};
+
+export const paymentSuccess = () => {
+  store.dispatch(paymentSuccessed());
 };
 
 /**
  * REDUCER
  */
-export default function(cart = defaultCart, action) {
+export default function(cart = {products: [], paid: false}, action) {
   switch (action.type) {
     case ADD_PRODUCT:
       const product = {info: action.product, quantity: 1};
@@ -123,6 +146,10 @@ export default function(cart = defaultCart, action) {
       }
     case CLEAR_PRODUCTS:
       return {...cart, products: []};
+    case PAYMENT_SUCCESS:
+      return {...cart, paid: true};
+    case LOAD_CART:
+      return {...cart, products: action.products};
     default:
       return cart;
   }

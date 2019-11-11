@@ -20,9 +20,11 @@ class allProducts extends React.Component {
   render() {
     return (
       <div>
-        {this.state.products.map(product => (
-          <SingleProduct key={product.id} product={product} />
-        ))}
+        <div className="row">
+          {this.state.products.map(product => (
+            <SingleProduct key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     );
   }

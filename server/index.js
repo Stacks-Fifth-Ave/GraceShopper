@@ -7,7 +7,7 @@ const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
 const sessionStore = new SequelizeStore({db});
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8084;
 const app = express();
 const socketio = require('socket.io');
 module.exports = app;
@@ -60,6 +60,7 @@ const createApp = () => {
       saveUninitialized: false
     })
   );
+
   app.use(passport.initialize());
   app.use(passport.session());
 

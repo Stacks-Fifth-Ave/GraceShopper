@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
-const pkg = require('../../package.json');
+// const pkg = require('../../package.json');
+const pkgName = 'stacks-fifth';
 
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '');
+const databaseName = pkgName + (process.env.NODE_ENV === 'test' ? '-test' : '');
 
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
