@@ -30,10 +30,19 @@ form div {
   display: inline-block;
 }
 
+p.hidden {
+  visibility: hidden;
+}
+
 .app {
   margin: 50px;
 }
 
 button {
   background-color: rgb(110, 143, 159) !important;
+}
+
+div .msg-bar-validation {
+  color: rgb(255, 26, 26);
+  font-size: 0.75em;
 }
