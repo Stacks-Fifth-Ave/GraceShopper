@@ -46,7 +46,9 @@ class AuthForm extends React.Component {
               onChange={this.handleChange}
             />
             {this.state.email === '' ? (
-              <div />
+              <div>
+                <p className="hidden">✅</p>
+              </div>
             ) : (
               <div>{this.state.validEmail ? <p>✅</p> : <p>❌</p>}</div>
             )}
