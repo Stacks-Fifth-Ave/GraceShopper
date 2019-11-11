@@ -94,6 +94,22 @@ class AuthForm extends React.Component {
           )}
           {error && error.response && <div> {error.response.data} </div>}
         </form>
+        <div className="msg-bar-validation">
+          {this.state.validEmail || this.state.email === '' ? (
+            <p />
+          ) : (
+            <p>Please enter a valid e-mail address.</p>
+          )}
+          {this.state.validPassword || this.state.password === '' ? (
+            <p />
+          ) : (
+            <p>
+              A password must contain one upper-case letter, one lower-case
+              letter, one numeric digit, a special character, and be between
+              8-16 characters in length.
+            </p>
+          )}
+        </div>
         <a href="/auth/google">{displayName} with Google</a>
       </div>
     );
