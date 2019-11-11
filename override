@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+- node
+services:
+- postgresql
+addons:
+  postgresql: '10'
+dist: xenial
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+install:
+- npm ci
+before_script:
+- psql -c 'create database "stacks-fifth-test";' -U postgres
+script:
+- npm test
+- npm run build-client
+before_deploy:
+- rm -rf node_modules
+deploy:
+  provider: heroku
+  api_key:
+    secure: n6oe0C2Xsnwow1bjo18hsMsTshMuzgSH9lVZrrWe3/NZegfVRH9hNPln4EweZZEp2PSVPP4lrEAt+GpgqMuW9ZXpmBjm6aC4J5+soMIDP1OtTKJyZTz6H9WGvlqw5QySb/ZMZaKavR3tkOfRPnh/RkDKfvxGaIlZAF3sPTHQfsGTOGXlHzkztMvMA2lDDyJBH23D1kAdLUwWfVTlaM0whgQ1O6Qabn7nMdrzZgLbW1vmV1i8qalcz5o50GCJTUCYFardcOellhOOK9OvEIdmYhzFjEHuPf3ihUKzflVLDk373OL676pB+lXquUisg4kopelx0vFG7MoorfukwCiHvc/P87KFC8QajJyDio9BA9tHCj0lyTCrLQm2oiENf0Pr0Z/oQHnOroM4yJ2hhRa5LQLdWMnorh3bAjmCVkQgtypsEoFdgLPNsclbBiEyLMukfHaFQZg+nuvaebZC6b6J3nX17Kapqhv+fYudlLIAwT4jNou6fXYN/dWufI6gS1yQbYU3K6szfLoYD1vwKdpmPqsybBEun0x8tHDHEGSgVWkH5BVqnqtZu24RCi/GVabHYMEjOjQfaBIxNAOYSZFAK7vP93BOWXSPqfOoQ2kacJz5o9wX/K5WO7cWQ3MtnMZemdZLBb0qgL5O9YgU4aQiK+5dmK92Lcwuyo1OT+gPF1A=
+  app: stacksfifth
+env:
+  global:
+    secure: KbYPJ1GzVG+CP5vSqKDXrRoKU8F1lByVTauDmJ1BAvSIxMeUX2osVpxPRTFXLt9GLpMLaJbUVe1AkqAIsvtXvqVy1yrFpCrHYY/RgDlJWEgjPEBy4doqcPL0N6ApszBqocUjFhQ+o5lmwJzLOb6RaLKglP51u2zapIQBVWnRHWn0ASkrh12yiILaelzMvHzrvJB5FywGQn6YXnGM6EvqboPogC3mkKWUCAsEPEYNycHui0oZ4XIdUbdgi0Z40dr5NS/yW9NGxs1EG6HWO51ITQdpmiNwHodGL8m/npGlbc1rzZU7s1LJRtLSi+tu5R51Xx3FYUBcorJCaESddqY62QsiG6J417yh7kcRaYEL8K4JZSwg9ZemL23myApNhNJnD/DK6RWLrk4wYT/8HzW6wjy1L0jewKpW8yswyNaZkkL+RMAldwzvLkZcapn4VVX4P+rkv+6AqKKXSPCE+6EEVNwPDa9DAMRpPoWjchltsJyZ6Oj5dktSYX6I0GAa0umphZ7oEGbJWClrv2MRZDOuQ3ysZy34Lj6dIz4WY28FGA5nj6a5hHLTu+YyZ+AHVBGch3e7PXh/t0qHYrGZ5GIKWdF/zYdtcWa4viodapdw5OVkd2hX0p0IqhcLOp/AA05pjeu9YA6y2p5G9+XAUL3ojzHs8X0uQP5D4k54MqXBQh4=
