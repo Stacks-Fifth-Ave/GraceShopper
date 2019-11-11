@@ -3,7 +3,7 @@ const db = require('../db');
 
 const CartProduct = db.define('cart', {
   quantity: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.INTEGER,
     defaultValue: 1
   },
   priceAtPurchase: {
