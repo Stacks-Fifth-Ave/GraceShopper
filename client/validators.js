@@ -18,7 +18,8 @@ const emailValidator = emailAdd => {
   let tld = '';
 
   // populate valid characters:
-  // numeric is valid in both local and DNS label
+  // numeric is valid in both local and DNS label:
+  // (by ASCII code)
   for (let i = 48; i <= 57; i++) {
     addCharToObject(i, validLocalChars);
     addCharToObject(i, validDnsLabelChars);
@@ -39,6 +40,7 @@ const emailValidator = emailAdd => {
   // actual email addresses:
   validLocalChars['!'] = '!';
   validLocalChars['#'] = '#';
+  validLocalChars.$ = '$';
   validLocalChars['%'] = '%';
   validLocalChars['&'] = '&';
   validLocalChars["'"] = "'";
