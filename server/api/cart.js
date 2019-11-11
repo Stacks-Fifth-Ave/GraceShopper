@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Cart, User, Product} = require('../db/models');
+const {Cart, User, Product, CartProduct} = require('../db/models');
 const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 //in the case of a guest, what is the route for the cart?
 
@@ -24,10 +24,7 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
       },
       include: [
         {
-          model: Product,
-          through: {
-            attributes: ['id', 'name', 'price', 'image']
-          }
+          model: Product
         }
       ]
     });
@@ -87,15 +84,20 @@ router.put(
         },
         include: [
           {
-            model: Product,
-            through: {
-              attributes: ['id', 'name', 'price', 'image']
-            }
+            model: Product
           }
         ]
       });
       const product = await Product.findByPk(productId);
-      await currentCart.addProduct(product);
+      const productCart = currentCart.products.filter(
+        product => product.id === productId
+      )[0];
+      if (productCart) {
+        productCart.CartProduct.quantity++;
+        await productCart.CartProduct.save();
+      } else {
+        await currentCart.addProduct(product);
+      }
       res.sendStatus(201);
     } catch (err) {
       console.error(err.message);
@@ -109,15 +111,39 @@ router.put(
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {
+      // const productId = req.body.productId;
+      // const currentCart = await Cart.findOne({
+      //   where: {
+      //     userId: req.params.userId,
+      //     completed: false
+      //   }
+      // });
+      // const product = await Product.findByPk(productId);
+      // currentCart.removeProduct(product);
       const productId = req.body.productId;
       const currentCart = await Cart.findOne({
         where: {
           userId: req.params.userId,
           completed: false
-        }
+        },
+        include: [
+          {
+            model: Product
+          }
+        ]
       });
       const product = await Product.findByPk(productId);
-      currentCart.removeProduct(product);
+      const productCart = currentCart.products.filter(
+        product => product.id === productId
+      )[0];
+      if (productCart) {
+        if (productCart.CartProduct.quantity === 1) {
+          currentCart.removeProduct(product);
+        } else {
+          productCart.CartProduct.quantity--;
+          await productCart.CartProduct.save();
+        }
+      }
       res.sendStatus(204);
     } catch (err) {
       console.error(err.message);

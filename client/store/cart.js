@@ -45,11 +45,9 @@ export const removeProduct = product => async dispatch => {
   try {
     const {data} = await axios.get('/auth/me');
     const userId = data.id || 0;
-    if (userId) {
-      await axios.put(`/api/cart/removeProduct/${userId}`, {
+    if (userId) {await axios.put(`/api/cart/removeProduct/${userId}`, {
         productId: product.id
-      });
-    }
+      });}
     dispatch(removedProduct(product));
   } catch (err) {
     console.error(err);
