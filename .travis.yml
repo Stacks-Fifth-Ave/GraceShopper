@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-- node
+  - node
 services:
-- postgresql
+  - postgresql
 addons:
   postgresql: '10'
 dist: xenial
@@ -11,22 +11,24 @@ notifications:
     on_success: change
     on_failure: always
 install:
-- npm ci
+  - npm ci
 before_script:
-- psql -c 'create database "stacks-fifth-test";' -U postgres
+  - psql -c 'create database "stacks-fifth-test";' -U postgres
 script:
-- npm test
-- npm run build-client
-before_deploy:
-- rm -rf node_modules
-deploy:
-  skip_cleanup: true
-  provider: heroku
-  app: stacksfifth
-  api_key:
-    secure: LDteT+QPgkgHk4FHAb71Uq/zaO8T05QKZSjj4kfDJqaSrOUm0sj4YZs1nXXVU1jyS+w+4dpwA5Q2XZQZJUQ0aSrB8tr3Dk2p0fwR+V87RyE68sh9YPP2OCYFUH2uHBdf6ZMguslZ4BYfsx0fBLDDykXWzrjGDdETYwnvXv5AJOLQBI1zlzvaISAvlS7Ritf2a4rF5EwlEgopKzZnieLL3TIhSe5QvXd9C+idAEbdvIGEUVwujVVIwJHHpZvc4VlvSnI1ScU7Nlb/2UwIChdEOGIK2+LciX/b1dBIoTtrTorfqP/FuEpvFCcv6YJfpjD9GEKn80eyzP1RRWeozdUF7uZ1utVrM9fHusmRNp0+mKlNw6IrsSm+NAOQ2L2O0PM9mcTr2zsDO/d2PyAPlwO66YVS2aqTYDshIV3chnTWs2ncu9qD8+WZ2gbrV3JQTOfnzFGX8ona7shVTt1FvejIDgc0Q4sR66dYLuzftlV51Qts/BI3pNH2xjTMY+wRjRiki1j2EU43ZJYN9nCcdxBMCwnUAMlUrmq1/Yr01mYTEdINoxKYtm5/qnbD/3uE14GcZ19uQAuJoK6Yu0vGSl+INKKWkGPFYtdsj1Nlb1zmY/WB81lv/Psq0sRepyTM05QPObHa707+G5SY1fjpeNooKVCyw+GBA2YYElSc+0gz7V0=
-  on: 
-    all_branches: true
+  - npm test
+  - npm run build-client
+
 env:
   global:
     secure: KbYPJ1GzVG+CP5vSqKDXrRoKU8F1lByVTauDmJ1BAvSIxMeUX2osVpxPRTFXLt9GLpMLaJbUVe1AkqAIsvtXvqVy1yrFpCrHYY/RgDlJWEgjPEBy4doqcPL0N6ApszBqocUjFhQ+o5lmwJzLOb6RaLKglP51u2zapIQBVWnRHWn0ASkrh12yiILaelzMvHzrvJB5FywGQn6YXnGM6EvqboPogC3mkKWUCAsEPEYNycHui0oZ4XIdUbdgi0Z40dr5NS/yW9NGxs1EG6HWO51ITQdpmiNwHodGL8m/npGlbc1rzZU7s1LJRtLSi+tu5R51Xx3FYUBcorJCaESddqY62QsiG6J417yh7kcRaYEL8K4JZSwg9ZemL23myApNhNJnD/DK6RWLrk4wYT/8HzW6wjy1L0jewKpW8yswyNaZkkL+RMAldwzvLkZcapn4VVX4P+rkv+6AqKKXSPCE+6EEVNwPDa9DAMRpPoWjchltsJyZ6Oj5dktSYX6I0GAa0umphZ7oEGbJWClrv2MRZDOuQ3ysZy34Lj6dIz4WY28FGA5nj6a5hHLTu+YyZ+AHVBGch3e7PXh/t0qHYrGZ5GIKWdF/zYdtcWa4viodapdw5OVkd2hX0p0IqhcLOp/AA05pjeu9YA6y2p5G9+XAUL3ojzHs8X0uQP5D4k54MqXBQh4=
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: stacksfifth
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: aVg86xKT3lNLN+ESxipr0m5raprzGWGwEgTOFX8k/s0COO4tiEFyIVZR1SsftrFGVkK7/vk83NMQyFV13Smj/cok+kMw3THKKc5xF9cUNWfIS3UQsfMTc24wYOgpA13ijBMtAWOGOQbTZMS9sA9T8efYPTxnocJVQjur7gkRQhd+gz9B68bQcf00kg1EN0N0WjlUFLM6+QMpefg650uCY0FJAr8DtNrLcNpllpdU1Fm9tREn4vyFyT+VFNSIPmiFu02qs80EWOx7THwUezlPDNuRyWhRUJSLbZcWdUhxN7pH1XyMmfK89f5jJ3VUXzqIsq1hbIyOhwykrLN6KirAh+nZIhyUllL1ZoUN7PgYYj427jw4CyiXxih65AflBLXTWWXJohV4OQn3jQwwztEHTNGI8ksu5JLCjQwdqpPxVn7QR72h3I790hWw4M6ntGKulpQUO0zLnxJOHNeNR+kvla9WjGX/tH+FHK9zdba6t8EYAcQZJzfgg5ycRBzoIQZMOUJk9LdPn9CezxMb3+rfeFDInCdFKM0YFyy0upC4nwFZzxlev0IGlYLE01d9eeofqs3mSBUk8BYm4EwpmPO/hcuSG042U7Hvm/xF4quPFGT9xHez6jdgyXsxQB3ZVPdO8bqyrkNG7m9gr6ZwGtRWJw11OtMB/YErW5g30rCS3qk=
