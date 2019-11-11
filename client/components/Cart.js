@@ -50,7 +50,7 @@ class DisconnectedCart extends React.Component {
             <div className="card-action center">
               <button
                 className="waves-effect waves-light btn-large"
-                onClick={() => this.props.remove(product)}
+                onClick={() => this.props.remove(product.info)}
                 type="submit"
               >
                 Remove
