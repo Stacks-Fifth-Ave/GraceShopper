@@ -1,6 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-import {clearProducts} from './cart';
+import {clearProducts, getCart} from './cart';
 
 /**
  * ACTION TYPES
@@ -43,6 +43,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data));
+    dispatch(getCart());
     history.push('/home');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -72,19 +73,13 @@ export const deleteUser = user => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function(user = {}, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;
     case REMOVE_USER:
       return defaultUser;
-    case DELETE_USER:
-      console.log('ACTION', action);
-      console.log('STATE', state);
-
-      return {...state};
-
     default:
-      return state;
+      return user;
   }
 }

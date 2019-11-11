@@ -2,37 +2,76 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {auth} from '../store';
+import {emailValidator} from '../validators';
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props;
+class AuthForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      validEmail: true
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
-  );
-};
+  handleChange(event) {
+    let name = event.target.name;
+    let value = event.target.value;
+    let validator = 'valid' + name[0].toUpperCase() + name.slice(1);
+
+    this.setState({
+      [name]: value,
+      [validator]: emailValidator(value)
+    });
+  }
+
+  render() {
+    const {name, displayName, handleSubmit, error} = this.props;
+
+    return (
+      <div>
+        <form onSubmit={handleSubmit} name={name}>
+          <div>
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input
+              name="email"
+              type="text"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            {this.state.email === '' ? (
+              <div />
+            ) : (
+              <div>{this.state.validEmail ? <p>✅</p> : <p>❌</p>}</div>
+            )}
+          </div>
+          <div>
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <button type="submit">{displayName}</button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+        <a href="/auth/google">{displayName} with Google</a>
+      </div>
+    );
+  }
+}
 
 /**
  * CONTAINER

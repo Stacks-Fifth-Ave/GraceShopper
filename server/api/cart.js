@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Cart, User} = require('../db/models');
+const {Cart, User, Product} = require('../db/models');
 const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 //in the case of a guest, what is the route for the cart?
 
@@ -21,7 +21,15 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
       where: {
         userId: req.params.userId,
         completed: false
-      }
+      },
+      include: [
+        {
+          model: Product,
+          through: {
+            attributes: ['id', 'name', 'price', 'image']
+          }
+        }
+      ]
     });
     res.json(currentCart);
   } catch (err) {
@@ -31,17 +39,22 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
 });
 
 router.get(
-  '/:userId/cartHistory',
+  '/orders/:userId',
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {
-      const cartHistory = await Cart.findAll({
+      const orders = await Cart.findAll({
+        include: [
+          {
+            model: Product
+          }
+        ],
         where: {
           userId: req.params.userId,
           completed: true
         }
       });
-      res.json(cartHistory);
+      res.json(orders);
     } catch (err) {
       next(err);
     }
@@ -71,10 +84,18 @@ router.put(
         where: {
           userId: req.params.userId,
           completed: false
-        }
+        },
+        include: [
+          {
+            model: Product,
+            through: {
+              attributes: ['id', 'name', 'price', 'image']
+            }
+          }
+        ]
       });
-
-      currentCart.addProduct(productId);
+      const product = await Product.findByPk(productId);
+      await currentCart.addProduct(product);
       res.sendStatus(201);
     } catch (err) {
       console.error(err.message);
@@ -95,8 +116,8 @@ router.put(
           completed: false
         }
       });
-
-      currentCart.removeProduct(productId);
+      const product = await Product.findByPk(productId);
+      currentCart.removeProduct(product);
       res.sendStatus(204);
     } catch (err) {
       console.error(err.message);
