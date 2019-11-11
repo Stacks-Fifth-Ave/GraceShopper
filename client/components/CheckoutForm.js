@@ -9,7 +9,70 @@ class CheckoutForm extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
-      address: ''
+      streetAddress: '',
+      street: '',
+      aptNo: '',
+      city: '',
+      state: '',
+      zip: '',
+      stateList: [
+        '',
+        'AL',
+        'AK',
+        'AR',
+        'CA',
+        'CO',
+        'CT',
+        'DE',
+        'FL',
+        'GA',
+        'HI',
+        'ID',
+        'IL',
+        'IN',
+        'IA',
+        'KS',
+        'KY',
+        'LA',
+        'ME',
+        'MD',
+        'MA',
+        'MI',
+        'MN',
+        'MS',
+        'MO',
+        'MT',
+        'NE',
+        'NV',
+        'NH',
+        'NJ',
+        'NM',
+        'NY',
+        'NC',
+        'ND',
+        'OH',
+        'OK',
+        'OR',
+        'PA',
+        'RI',
+        'SC',
+        'SD',
+        'TN',
+        'TX',
+        'UT',
+        'VT',
+        'VA',
+        'WA',
+        'WV',
+        'WI',
+        'WY',
+        'DC',
+        'AS',
+        'GU',
+        'MP',
+        'PR',
+        'VI'
+      ]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +96,7 @@ class CheckoutForm extends React.Component {
   render() {
     return (
       <div>
-        <form name={name}>
+        <form name="checkout-form">
           <div>
             <label>
               <small>First Name</small>
@@ -56,14 +119,75 @@ class CheckoutForm extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+          <div />
           <div>
-            <label htmlFor="address">
-              <small>Address</small>
+            <label htmlFor="streetAddress">
+              <small>Street Address</small>
             </label>
             <input
-              name="address"
+              name="streetAddress"
               type="text"
-              value={this.state.address}
+              value={this.state.streetAddress}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="street">
+              <small>Street</small>
+            </label>
+            <input
+              name="street"
+              type="text"
+              value={this.state.street}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="aptNo">
+              <small>Apt. No.</small>
+            </label>
+            <input
+              name="aptNo"
+              type="text"
+              value={this.state.aptNo}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="city">
+              <small>City</small>
+            </label>
+            <input
+              name="city"
+              type="text"
+              value={this.state.city}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="state">
+              <small>State</small>
+            </label>
+            <select
+              name="state"
+              value={this.state.state}
+              onChange={this.handleChange}
+            >
+              {this.state.stateList.map((state, idx) => (
+                <option key={idx} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="zip">
+              <small>Zip</small>
+            </label>
+            <input
+              name="zip"
+              type="text"
+              value={this.state.zip}
               onChange={this.handleChange}
             />
           </div>
@@ -78,7 +202,11 @@ class CheckoutForm extends React.Component {
         <div>
           {this.state.firstName !== '' &&
           this.state.lastName !== '' &&
-          this.state.address !== '' ? (
+          this.state.streetAddress !== '' &&
+          this.state.street !== '' &&
+          this.state.city !== '' &&
+          this.state.state !== '' &&
+          this.state.zip.length === 5 ? (
             <button
               className="waves-effect waves-light btn-large"
               type="submit"
