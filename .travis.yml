@@ -1,30 +1,30 @@
 language: node_js
 node_js:
-  - node # uses most recent stable node version
+- node
 services:
-  - postgresql # starts up postgres
+- postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+- npm ci
 before_script:
-  - psql -c 'create database "stacks-fifth-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+- psql -c 'create database "stacks-fifth-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-before_deploy: # omit node_modules, since we set skip_cleanup below
-  - rm -rf node_modules
-deploy: # see README for details on these keys
-  # prevents travis from deleting the build
+- npm test
+- npm run build-client
+before_deploy:
+- rm -rf node_modules
+deploy:
   skip_cleanup: true
   provider: heroku
-  # app should be your heroku app name; see README
   app: stacksfifth
-  # the secure key indicates an encrypted value; see README
   api_key:
     secure: LDteT+QPgkgHk4FHAb71Uq/zaO8T05QKZSjj4kfDJqaSrOUm0sj4YZs1nXXVU1jyS+w+4dpwA5Q2XZQZJUQ0aSrB8tr3Dk2p0fwR+V87RyE68sh9YPP2OCYFUH2uHBdf6ZMguslZ4BYfsx0fBLDDykXWzrjGDdETYwnvXv5AJOLQBI1zlzvaISAvlS7Ritf2a4rF5EwlEgopKzZnieLL3TIhSe5QvXd9C+idAEbdvIGEUVwujVVIwJHHpZvc4VlvSnI1ScU7Nlb/2UwIChdEOGIK2+LciX/b1dBIoTtrTorfqP/FuEpvFCcv6YJfpjD9GEKn80eyzP1RRWeozdUF7uZ1utVrM9fHusmRNp0+mKlNw6IrsSm+NAOQ2L2O0PM9mcTr2zsDO/d2PyAPlwO66YVS2aqTYDshIV3chnTWs2ncu9qD8+WZ2gbrV3JQTOfnzFGX8ona7shVTt1FvejIDgc0Q4sR66dYLuzftlV51Qts/BI3pNH2xjTMY+wRjRiki1j2EU43ZJYN9nCcdxBMCwnUAMlUrmq1/Yr01mYTEdINoxKYtm5/qnbD/3uE14GcZ19uQAuJoK6Yu0vGSl+INKKWkGPFYtdsj1Nlb1zmY/WB81lv/Psq0sRepyTM05QPObHa707+G5SY1fjpeNooKVCyw+GBA2YYElSc+0gz7V0=
+env:
+  global:
+    secure: KbYPJ1GzVG+CP5vSqKDXrRoKU8F1lByVTauDmJ1BAvSIxMeUX2osVpxPRTFXLt9GLpMLaJbUVe1AkqAIsvtXvqVy1yrFpCrHYY/RgDlJWEgjPEBy4doqcPL0N6ApszBqocUjFhQ+o5lmwJzLOb6RaLKglP51u2zapIQBVWnRHWn0ASkrh12yiILaelzMvHzrvJB5FywGQn6YXnGM6EvqboPogC3mkKWUCAsEPEYNycHui0oZ4XIdUbdgi0Z40dr5NS/yW9NGxs1EG6HWO51ITQdpmiNwHodGL8m/npGlbc1rzZU7s1LJRtLSi+tu5R51Xx3FYUBcorJCaESddqY62QsiG6J417yh7kcRaYEL8K4JZSwg9ZemL23myApNhNJnD/DK6RWLrk4wYT/8HzW6wjy1L0jewKpW8yswyNaZkkL+RMAldwzvLkZcapn4VVX4P+rkv+6AqKKXSPCE+6EEVNwPDa9DAMRpPoWjchltsJyZ6Oj5dktSYX6I0GAa0umphZ7oEGbJWClrv2MRZDOuQ3ysZy34Lj6dIz4WY28FGA5nj6a5hHLTu+YyZ+AHVBGch3e7PXh/t0qHYrGZ5GIKWdF/zYdtcWa4viodapdw5OVkd2hX0p0IqhcLOp/AA05pjeu9YA6y2p5G9+XAUL3ojzHs8X0uQP5D4k54MqXBQh4=
