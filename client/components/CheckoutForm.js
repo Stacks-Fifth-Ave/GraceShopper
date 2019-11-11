@@ -4,6 +4,17 @@ import {clearProducts} from '../store/cart';
 import {connect} from 'react-redux';
 
 class CheckoutForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      firstName: '',
+      lastName: '',
+      address: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.haandleChange = this.handleChange.bind(this);
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     if (this.props.paid) {
@@ -11,6 +22,12 @@ class CheckoutForm extends React.Component {
     } else {
       alert('please enter a valid card');
     }
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   render() {
@@ -21,19 +38,34 @@ class CheckoutForm extends React.Component {
             <label>
               <small>First Name</small>
             </label>
-            <input name="firstName" type="text" />
+            <input
+              name="firstName"
+              type="text"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
           </div>
           <div>
             <label>
               <small>Last Name</small>
             </label>
-            <input name="lastName" type="text" />
+            <input
+              name="lastName"
+              type="text"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
           </div>
           <div>
             <label htmlFor="address">
               <small>Address</small>
             </label>
-            <input name="address" type="text" />
+            <input
+              name="address"
+              type="text"
+              value={this.state.address}
+              onChange={this.handleChange}
+            />
           </div>
         </form>
         <div>
@@ -44,13 +76,26 @@ class CheckoutForm extends React.Component {
           />
         </div>
         <div>
-          <button
-            className="waves-effect waves-light btn-large"
-            type="submit"
-            onClick={this.handleSubmit}
-          >
-            Submit
-          </button>
+          {this.state.firstName !== '' &&
+          this.state.lastName !== '' &&
+          this.state.address !== '' ? (
+            <button
+              className="waves-effect waves-light btn-large"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              className="waves-effect waves-light btn-large"
+              type="submit"
+              onClick={this.handleSubmit}
+              disabled
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     );

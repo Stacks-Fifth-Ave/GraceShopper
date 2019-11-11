@@ -1,6 +1,7 @@
 node_modules
 public/bundle.js
 public/bundle.js.map
+public/bundle.js.map~PasswordValidate
 secrets.js
 .DS_Store
 npm-debug.log
