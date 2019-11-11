@@ -23,6 +23,8 @@ deploy:
   skip_cleanup: true
   provider: heroku
   app: stacksfifth
+  on:
+    branch: master
   api_key:
     secure: LDteT+QPgkgHk4FHAb71Uq/zaO8T05QKZSjj4kfDJqaSrOUm0sj4YZs1nXXVU1jyS+w+4dpwA5Q2XZQZJUQ0aSrB8tr3Dk2p0fwR+V87RyE68sh9YPP2OCYFUH2uHBdf6ZMguslZ4BYfsx0fBLDDykXWzrjGDdETYwnvXv5AJOLQBI1zlzvaISAvlS7Ritf2a4rF5EwlEgopKzZnieLL3TIhSe5QvXd9C+idAEbdvIGEUVwujVVIwJHHpZvc4VlvSnI1ScU7Nlb/2UwIChdEOGIK2+LciX/b1dBIoTtrTorfqP/FuEpvFCcv6YJfpjD9GEKn80eyzP1RRWeozdUF7uZ1utVrM9fHusmRNp0+mKlNw6IrsSm+NAOQ2L2O0PM9mcTr2zsDO/d2PyAPlwO66YVS2aqTYDshIV3chnTWs2ncu9qD8+WZ2gbrV3JQTOfnzFGX8ona7shVTt1FvejIDgc0Q4sR66dYLuzftlV51Qts/BI3pNH2xjTMY+wRjRiki1j2EU43ZJYN9nCcdxBMCwnUAMlUrmq1/Yr01mYTEdINoxKYtm5/qnbD/3uE14GcZ19uQAuJoK6Yu0vGSl+INKKWkGPFYtdsj1Nlb1zmY/WB81lv/Psq0sRepyTM05QPObHa707+G5SY1fjpeNooKVCyw+GBA2YYElSc+0gz7V0=
 env:
