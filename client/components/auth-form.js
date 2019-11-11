@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {auth} from '../store';
-import {emailValidator} from '../validators';
+import {emailValidator, passwordValidator} from '../validators';
 
 /**
  * COMPONENT
@@ -13,7 +13,8 @@ class AuthForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      validEmail: true
+      validEmail: false,
+      validPassword: false
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -24,9 +25,18 @@ class AuthForm extends React.Component {
     let validator = 'valid' + name[0].toUpperCase() + name.slice(1);
 
     this.setState({
-      [name]: value,
-      [validator]: emailValidator(value)
+      [name]: value
     });
+
+    if (name === 'email') {
+      this.setState({
+        [validator]: emailValidator(value)
+      });
+    } else if (name === 'password') {
+      this.setState({
+        [validator]: passwordValidator(value, this.state.email)
+      });
+    }
   }
 
   render() {
@@ -46,7 +56,9 @@ class AuthForm extends React.Component {
               onChange={this.handleChange}
             />
             {this.state.email === '' ? (
-              <div />
+              <div>
+                <p className="hidden">✅</p>
+              </div>
             ) : (
               <div>{this.state.validEmail ? <p>✅</p> : <p>❌</p>}</div>
             )}
@@ -61,10 +73,25 @@ class AuthForm extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            {this.state.password === '' ? (
+              <div>
+                <p className="hidden">✅</p>
+              </div>
+            ) : (
+              <div>{this.state.validPassword ? <p>✅</p> : <p>❌</p>}</div>
+            )}
           </div>
-          <div>
-            <button type="submit">{displayName}</button>
-          </div>
+          {this.state.validPassword && this.state.validEmail ? (
+            <div>
+              <button type="submit">{displayName}</button>
+            </div>
+          ) : (
+            <div>
+              <button type="submit" disabled>
+                {displayName}
+              </button>
+            </div>
+          )}
           {error && error.response && <div> {error.response.data} </div>}
         </form>
         <a href="/auth/google">{displayName} with Google</a>

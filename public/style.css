@@ -25,6 +25,10 @@ form div {
   display: inline-block;
 }
 
+p.hidden {
+  visibility: hidden;
+}
+
 .app {
   margin: 50px;
 }
