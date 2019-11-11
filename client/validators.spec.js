@@ -1,5 +1,5 @@
 const {expect} = require('chai')
-const {emailValidator} = require('./validators')
+const {emailValidator, passwordValidator} = require('./validators')
 
 describe('email validator', () => {
   it('is a function', () => {
@@ -43,11 +43,11 @@ describe('email validator', () => {
     expect(
       emailValidator(
         'cody@emailemailemailemailemailemailemailemailemai' +
-          'lemailemailemailemailemailemailemailemailemailemailemailemailemaile' +
-          'mailemailemailemailemailemailemailemailemailemailemailemailemailema' +
-          'ilemailemailemailemailemailemailemailemailemailemailemailemailemail' +
-          'emailemailemailemailemailemailemailemailemailemailemailemailemailem' +
-          'ailemailemail.com'
+          'lemailemailemailemailemailemailemailemailemailemailemailemailemail' +
+          'emailemailemailemailemailemailemailemailemailemailemailemailemaile' +
+          'mailemailemailemailemailemailemailemailemailemailemailemailemailem' +
+          'ailemailemailemailemailemailemailemailemailemailemailemailemailema' +
+          'ilemailemailemail.com'
       )
     ).deep.equals(false)
     expect(emailValidator('cody@.c')).deep.equals(false)
@@ -81,4 +81,88 @@ describe('email validator', () => {
     expect(emailValidator('cody@-email.com')).deep.equals(false)
     expect(emailValidator('cody@email.com-')).deep.equals(false)
   })
+})
+
+describe('password validator', () => {
+  it('is a function: ', () => {
+    expect(passwordValidator).to.be.a('function')
+  })
+  it('returns a boolean: ', () => {
+    expect(passwordValidator('', '')).is.a('boolean')
+  })
+  it('returns false if password is not between 8 and 16 characters, inclusively', () => {
+    expect(passwordValidator('hello', 'cody@email.com')).deep.equals(false)
+    expect(
+      passwordValidator('hellotheremynameiscodyiamapug', 'cody@email.com')
+    ).deep.equals(false)
+  })
+  it('returns false if password does not contain a numeric digit', () => {
+    expect(passwordValidator('andysokotwelve', 'c@g.com')).deep.equals(false)
+    expect(passwordValidator('andySoko12!', 'c@g.com')).deep.equals(true)
+  })
+  it('returns false if password does not contain a special digit', () => {
+    expect(passwordValidator('andySoko12', 'c@gm.com')).deep.equals(false)
+    expect(passwordValidator('andySoko12!', 'c@gm.com')).deep.equals(true)
+  })
+  it(
+    'returns false if password does not contain at least one uppercase lette' +
+      'r',
+    () => {
+      expect(passwordValidator('andysoko12!', 'c@gm.com')).deep.equals(false)
+      expect(passwordValidator('andySoko12!', 'c@gm.com')).deep.equals(true)
+    }
+  )
+  it(
+    'returns false if password does not contain at least one lowercase lette' +
+      'r',
+    () => {
+      expect(passwordValidator('ANDYSOKO12!', 'c@gm.com')).deep.equals(false)
+      expect(passwordValidator('ANDYsOKO12!', 'c@gm.com')).deep.equals(true)
+    }
+  )
+  it(
+    'returns false if password contains a token from the email address delim' +
+      'ited by dots, case-insensitive',
+    () => {
+      expect(
+        passwordValidator('Andy12!S', 'andy.soko12@email.com')
+      ).deep.equals(false)
+      expect(
+        passwordValidator('iAm12!andy', 'andy.soko12@email.com')
+      ).deep.equals(false)
+      expect(passwordValidator('andy!Soko12', 'cody@email.com')).deep.equals(
+        true
+      )
+    }
+  )
+  it(
+    'returns false if password contains a token from the email address delim' +
+      'ited by dashes, case-insensitive',
+    () => {
+      expect(
+        passwordValidator('Andy12!S', 'andy-soko12@email.com')
+      ).deep.equals(false)
+      expect(
+        passwordValidator('iAm12!andy', 'andy-soko12@email.com')
+      ).deep.equals(false)
+      expect(passwordValidator('andy!Soko12', 'cody@email.com')).deep.equals(
+        true
+      )
+    }
+  )
+  it(
+    'returns false if password contains a token from the email address delim' +
+      'ited by underscores, case-insensitive',
+    () => {
+      expect(
+        passwordValidator('Andy12!S', 'andy_soko12@email.com')
+      ).deep.equals(false)
+      expect(
+        passwordValidator('iAm12!andy', 'andy_soko12@email.com')
+      ).deep.equals(false)
+      expect(
+        passwordValidator('andy!Soko12', 'cody_the_pug@email.com')
+      ).deep.equals(true)
+    }
+  )
 })

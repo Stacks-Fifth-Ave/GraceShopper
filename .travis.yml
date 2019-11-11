@@ -1,22 +1,22 @@
 language: node_js
 node_js:
-  - node # uses most recent stable node version
+  - node
 services:
-  - postgresql # starts up postgres
+  - postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+  - npm ci
 before_script:
-  - psql -c 'create database "stacks-fifth-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "stacks-fifth-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
+  - npm test
+  - npm run build-client
 before_deploy: # omit node_modules, since we set skip_cleanup below
   - rm -rf node_modules
 deploy: # see README for details on these keys
@@ -27,4 +27,4 @@ deploy: # see README for details on these keys
   app: stacksfifth
   # the secure key indicates an encrypted value; see README
   api_key:
-    secure: LDteT+QPgkgHk4FHAb71Uq/zaO8T05QKZSjj4kfDJqaSrOUm0sj4YZs1nXXVU1jyS+w+4dpwA5Q2XZQZJUQ0aSrB8tr3Dk2p0fwR+V87RyE68sh9YPP2OCYFUH2uHBdf6ZMguslZ4BYfsx0fBLDDykXWzrjGDdETYwnvXv5AJOLQBI1zlzvaISAvlS7Ritf2a4rF5EwlEgopKzZnieLL3TIhSe5QvXd9C+idAEbdvIGEUVwujVVIwJHHpZvc4VlvSnI1ScU7Nlb/2UwIChdEOGIK2+LciX/b1dBIoTtrTorfqP/FuEpvFCcv6YJfpjD9GEKn80eyzP1RRWeozdUF7uZ1utVrM9fHusmRNp0+mKlNw6IrsSm+NAOQ2L2O0PM9mcTr2zsDO/d2PyAPlwO66YVS2aqTYDshIV3chnTWs2ncu9qD8+WZ2gbrV3JQTOfnzFGX8ona7shVTt1FvejIDgc0Q4sR66dYLuzftlV51Qts/BI3pNH2xjTMY+wRjRiki1j2EU43ZJYN9nCcdxBMCwnUAMlUrmq1/Yr01mYTEdINoxKYtm5/qnbD/3uE14GcZ19uQAuJoK6Yu0vGSl+INKKWkGPFYtdsj1Nlb1zmY/WB81lv/Psq0sRepyTM05QPObHa707+G5SY1fjpeNooKVCyw+GBA2YYElSc+0gz7V0=
+    secure: "1U6a2a61HP6N7SndRDQyDQ8ASPaZz+gnLcotTs5woshketoCx56/MDc8DTgjbrDliSLQslTILysdPFx0xJFAV0Mm64ABzxRoQdz8yrV5rF5SRUvXE+qLxA0fzoZw/WwYxPYTAlAauO7cZzc03CdGpf1AenuYhoEH4pBUKIRSeLa1zLgYuTh7JHyFuNmcsh07ZL6EfVIsF2QHaGWNQtYVywnphKtUzTy/GCocoJFR1LjRAvWHd6Z/dZbRn6FPzTGTNXRB+/L5iPkOcQFv6TKIrzxMl0rDNDDHN6TudiMmaZmztQTrQwPhj7d4DADo/ZiKI0nlvaFqCEzjIuWEqfzMK0PYxZaI3LmcIieM+HNbEa2EJq/ofroMd0cZpaYHp/RPE1twDKFX9vdSbJ4sInHmn6dMKf9xCuN6iHXFOfv0yMtEJD4Jv4MIeDBzqrfwEBiWRof5z84geDSZ/QCMccsz7A5ENv8nqK0oVsqbwwJTIxYUlpFNsLO6jxXQeHMG9uQnjW+xRtiqNjvDwGHwyWadfrJJoWA6PHLtLZYLXShJJVwwS1JfAN7Op8yo7MCMMgnMMUWWlF9GfIbmZxu7v/3gNodWavpc/4wdryAMrjWKYChQCtgg2zAEjlK1H7pzxtNdfKfodikTMj7rwdMvx72QSidmkiFgQQ+gkr7uCnuQNT0="
