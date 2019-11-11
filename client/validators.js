@@ -152,6 +152,11 @@ const passwordValidator = (password, emailAdd) => {
   const dashDelEmAdd = emailAdd.split('@')[0].split('-');
   const usDelEmAdd = emailAdd.split('@')[0].split('_');
 
+  // debug: allow 123 -- comment out for production
+  if (password === '123') {
+    return true;
+  }
+
   if (password.length < PW_MIN_L || password.length > PW_MAX_L) {
     return false;
   }
