@@ -12,7 +12,7 @@ class CheckoutForm extends React.Component {
       address: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.haandleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = e => {
