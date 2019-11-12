@@ -39,7 +39,7 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
 });
 //user POST route to create a new user at '/signup' located in './index.js'
 
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const curUserId = req.params.userId;
     const curUser = await User.findByPk(curUserId);
@@ -51,7 +51,7 @@ router.put('/:userId', async (req, res, next) => {
   }
 });
 
-router.delete('/:userId', async (req, res, next) => {
+router.delete('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const user = await User.destroy({
