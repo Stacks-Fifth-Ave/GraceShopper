@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Cart, User, Product} = require('../db/models');
+const {Cart, User, Product, CartProduct} = require('../db/models');
 const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 //in the case of a guest, what is the route for the cart?
 
@@ -24,14 +24,29 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
       },
       include: [
         {
-          model: Product,
-          through: {
-            attributes: ['id', 'name', 'price', 'image']
-          }
+          model: Product
         }
       ]
     });
-    res.json(currentCart);
+    const products = currentCart.products.map(product => {
+      const newProd = {};
+      newProd.info = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        image: product.image,
+        price: product.price
+      };
+      newProd.quantity = product.CartProduct.quantity;
+
+      return newProd;
+    });
+    const newCart = {};
+    newCart.id = req.params.userId;
+    newCart.completed = false;
+    newCart.products = products;
+
+    res.json(newCart);
   } catch (err) {
     console.error(err.message);
     next(err);
@@ -87,15 +102,20 @@ router.put(
         },
         include: [
           {
-            model: Product,
-            through: {
-              attributes: ['id', 'name', 'price', 'image']
-            }
+            model: Product
           }
         ]
       });
       const product = await Product.findByPk(productId);
-      await currentCart.addProduct(product);
+      const productCart = currentCart.products.filter(
+        product => product.id === productId
+      )[0];
+      if (productCart) {
+        productCart.CartProduct.quantity++;
+        await productCart.CartProduct.save();
+      } else {
+        await currentCart.addProduct(product);
+      }
       res.sendStatus(201);
     } catch (err) {
       console.error(err.message);
@@ -114,10 +134,26 @@ router.put(
         where: {
           userId: req.params.userId,
           completed: false
-        }
+        },
+        include: [
+          {
+            model: Product
+          }
+        ]
       });
       const product = await Product.findByPk(productId);
-      currentCart.removeProduct(product);
+      currentCart.products.map(prod => console.log(prod.id, productId));
+      const productCart = currentCart.products.filter(
+        product => product.id === productId
+      )[0];
+      if (productCart) {
+        if (productCart.CartProduct.quantity === 1) {
+          currentCart.removeProduct(product);
+        } else {
+          productCart.CartProduct.quantity--;
+          await productCart.CartProduct.save();
+        }
+      }
       res.sendStatus(204);
     } catch (err) {
       console.error(err.message);
