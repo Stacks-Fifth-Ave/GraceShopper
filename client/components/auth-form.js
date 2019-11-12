@@ -83,11 +83,20 @@ class AuthForm extends React.Component {
           </div>
           {this.state.validPassword && this.state.validEmail ? (
             <div>
-              <button type="submit">{displayName}</button>
+              <button
+                className="waves-effect waves-light btn-large"
+                type="submit"
+              >
+                {displayName}
+              </button>
             </div>
           ) : (
             <div>
-              <button type="submit" disabled>
+              <button
+                type="submit"
+                className="waves-effect waves-light btn-large"
+                disabled
+              >
                 {displayName}
               </button>
             </div>

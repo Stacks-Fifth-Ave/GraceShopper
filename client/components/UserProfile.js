@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
 import {updateUser} from '../store/user.js';
 
@@ -31,7 +31,7 @@ class UserProfile extends React.Component {
       this.setState({
         user: {email: newEmail}
       });
-      updateUser(this.state.user, newEmail);
+      this.props.update(this.state.user, {email: newEmail});
     }
     // if (event.target.id === 'passwordButton') {
     // }
@@ -50,6 +50,7 @@ class UserProfile extends React.Component {
             </label>
             <input name="email" id="newEmail" type="text" />
             <button
+              className="waves-effect waves-light btn-large"
               type="submit"
               id="emailButton"
               onClick={e => this.handleSubmit(e)}
@@ -65,6 +66,7 @@ class UserProfile extends React.Component {
             </label>
             <input name="password" type="text" />
             <button
+              className="waves-effect waves-light btn-large"
               type="submit"
               id="passwordButton"
               onClick={this.handleSubmit}
@@ -78,12 +80,10 @@ class UserProfile extends React.Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     update: (user, newInfo) => dispatch(updateUser(user, newInfo))
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    update: (user, newInfo) => dispatch(updateUser(user, newInfo))
+  };
+};
 
-// const UserProfile = connect(null, mapDispatchToProps)(userProfile);
-
-export default UserProfile;
+export default connect(null, mapDispatchToProps)(UserProfile);
