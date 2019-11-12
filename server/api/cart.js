@@ -28,7 +28,25 @@ router.get('/:userId', isCurrentUserMiddleware, async (req, res, next) => {
         }
       ]
     });
-    res.json(currentCart);
+    const products = currentCart.products.map(product => {
+      const newProd = {};
+      newProd.info = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        image: product.image,
+        price: product.price
+      };
+      newProd.quantity = product.CartProduct.quantity;
+
+      return newProd;
+    });
+    const newCart = {};
+    newCart.id = req.params.userId;
+    newCart.completed = false;
+    newCart.products = products;
+
+    res.json(newCart);
   } catch (err) {
     console.error(err.message);
     next(err);
@@ -111,15 +129,6 @@ router.put(
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {
-      // const productId = req.body.productId;
-      // const currentCart = await Cart.findOne({
-      //   where: {
-      //     userId: req.params.userId,
-      //     completed: false
-      //   }
-      // });
-      // const product = await Product.findByPk(productId);
-      // currentCart.removeProduct(product);
       const productId = req.body.productId;
       const currentCart = await Cart.findOne({
         where: {
@@ -133,6 +142,7 @@ router.put(
         ]
       });
       const product = await Product.findByPk(productId);
+      currentCart.products.map(prod => console.log(prod.id, productId));
       const productCart = currentCart.products.filter(
         product => product.id === productId
       )[0];
