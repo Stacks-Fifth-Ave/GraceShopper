@@ -13,7 +13,6 @@ export const getOrders = () => {
       const userId = req.data.id;
       if (userId) {
         const {data} = await axios.get(`/api/cart/orders/${userId}`);
-        console.log('thunk function axios order req', data);
         dispatch(gotOrders(data));
       }
     } catch (err) {
