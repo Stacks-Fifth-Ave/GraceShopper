@@ -25,7 +25,37 @@ label {
   font-weight: bold;
 }
 
-form {
+.nav-wrapper .brand-logo {
+  font-family: 'Snell Roundhand';
+}
+
+/* div .row {
+  display: flex;
+  /* flex-direction: row; */
+/* height: 50%; */
+/* } */
+
+.single-product {
+  width: 30%;
+  height: 30%;
+  margin: auto;
+}
+
+.single-product {
+  height: 30%;
+  width: 30%;
+}
+
+/* .single-product .card-title {
+  background-color: rgb(110, 143, 159);
+  padding: 0px;
+} */
+
+.card .card-image .card-title {
+  background-color: rgb(110, 143, 159);
+  padding: 5px;
+}
+*/ form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
