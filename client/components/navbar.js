@@ -8,7 +8,7 @@ import {logout} from '../store';
 const Navbar = props => (
   <nav>
     <div className="nav-wrapper">
-      <a href="#" className="brand-logo right">
+      <a href="/home" className="brand-logo right">
         Stacks Fifth Avenue
       </a>
       <ul id="nav-mobile" className="left hide-on-med-and-down">
