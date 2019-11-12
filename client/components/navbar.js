@@ -8,7 +8,7 @@ import {logout} from '../store';
 const Navbar = props => (
   <nav>
     <div className="nav-wrapper">
-      <a href="#" className="brand-logo right">
+      <a href="/home" className="brand-logo right">
         Stacks Fifth Avenue
       </a>
       <ul id="nav-mobile" className="left hide-on-med-and-down">
@@ -28,9 +28,6 @@ const Navbar = props => (
               {/* The navbar will show these links after you log in */}
               <li>
                 <Link to="/orders">Order History</Link>
-              </li>
-              <li>
-                <Link to="/home">Home</Link>
               </li>
               <li>
                 <Link to="/userProfile">User Profile</Link>
