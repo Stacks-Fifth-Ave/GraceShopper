@@ -7,6 +7,7 @@ import {me} from './store';
 import allProducts from './components/allProducts';
 import AllUsers from './components/AllUsers';
 import CheckoutForm from './components/CheckoutForm';
+import UserProfile from './components/UserProfile';
 
 /**
  * COMPONENT
@@ -32,6 +33,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/userProfile" component={UserProfile} />
             <Route path="/orders" component={OrderHistory} />
             <Route path="/allUsers" component={AllUsers} />
           </Switch>
