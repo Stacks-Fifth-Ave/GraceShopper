@@ -12,19 +12,19 @@ const Navbar = props => (
         Stacks Fifth Avenue
       </a>
       <ul id="nav-mobile" className="left hide-on-med-and-down">
-        <li>
-          <div>
+        <>
+          <>
             <li>
               <Link to="/cart">Cart</Link>
             </li>
             <li>
               <Link to="/allProducts">All Products</Link>
             </li>
-          </div>
-        </li>
+          </>
+        </>
         {props.isLoggedIn ? (
-          <li>
-            <div>
+          <>
+            <>
               {/* The navbar will show these links after you log in */}
               <li>
                 <Link to="/orders">Order History</Link>
@@ -43,11 +43,11 @@ const Navbar = props => (
                 </a>
               </li>
               <li>{props.userEmail}</li>
-            </div>
-          </li>
+            </>
+          </>
         ) : (
-          <li>
-            <div>
+          <>
+            <>
               {/* The navbar will show these links before you log in */}
               <li>
                 <Link to="/login">Login</Link>
@@ -56,10 +56,10 @@ const Navbar = props => (
                 <Link to="/signup">Sign Up</Link>
               </li>
               <li>
-                <Link />Guest
+                <a href="#" />Guest
               </li>
-            </div>
-          </li>
+            </>
+          </>
         )}
       </ul>
     </div>
