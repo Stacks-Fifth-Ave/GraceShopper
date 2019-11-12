@@ -18,14 +18,17 @@ module.exports = router;
  * process.env.GOOGLE_CLIENT_SECRET = 'your google client secret'
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
+const GOOGLE_CLIENT_ID = clientID || process.env.clientID;
+const GOOGLE_CLIENT_SECRET = clientSecret || process.env.clientSecret;
+const GOOGLE_CALLBACK = callbackURL || process.env.callbackURL;
 
-if (!clientID || !clientSecret) {
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.');
 } else {
   const googleConfig = {
-    clientID,
-    clientSecret,
-    callbackURL
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: GOOGLE_CALLBACK
   };
 
   const strategy = new GoogleStrategy(

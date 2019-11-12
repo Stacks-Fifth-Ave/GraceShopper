@@ -11,11 +11,12 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 const PAYMENT_SUCCESS = 'PAYMENT_SUCESS';
 const LOAD_CART = 'LOAD_CART';
+const ADD_TOTAL = 'ADD_TOTAL';
 
 /**
  * INITIAL STATE
  */
-let defaultCart = {products: [], paid: false};
+let defaultCart = {products: [], paid: false, total: 0};
 
 /**
  * ACTION CREATORS
@@ -25,6 +26,7 @@ export const removedProduct = product => ({type: REMOVE_PRODUCT, product});
 export const clearedProducts = () => ({type: CLEAR_PRODUCTS});
 export const paymentSuccessed = () => ({type: PAYMENT_SUCCESS});
 export const gotCart = products => ({type: LOAD_CART, products});
+export const addTotal = total => ({type: ADD_TOTAL, total});
 
 /**
  * THUNK CREATORS
@@ -144,6 +146,9 @@ export default function(cart = {products: [], paid: false}, action) {
       return {...cart, paid: true};
     case LOAD_CART:
       return {...cart, products: action.products};
+    case ADD_TOTAL: {
+      return {...cart, total: action.total};
+    }
     default:
       return cart;
   }
