@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {removeProduct, getCart, clearProducts} from '../store/cart';
+import {removeProduct, getCart, clearProducts, addTotal} from '../store/cart';
 import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters.js';
 import Checkout from './Checkout';
 import CheckoutForm from './CheckoutForm';
@@ -17,10 +17,12 @@ class DisconnectedCart extends React.Component {
   }
 
   calculateTotal() {
-    return this.props.products.reduce((total, product) => {
+    const total = this.props.products.reduce((total, product) => {
       total += product.info.price * product.quantity;
       return total;
     }, 0);
+    this.props.addTotal(total);
+    return total;
   }
 
   render() {
@@ -87,7 +89,8 @@ const mapDispatchToProps = dispatch => {
   return {
     remove: product => dispatch(removeProduct(product)),
     clear: products => dispatch(clearProducts(products)),
-    getCart: dispatch(getCart())
+    getCart: dispatch(getCart()),
+    addTotal: total => dispatch(addTotal(total))
   };
 };
 
