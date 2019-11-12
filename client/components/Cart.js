@@ -40,8 +40,11 @@ const DisconnectedCartWithToast = props => {
           </div>
           <div className="card-stacked col">
             <div className="card-content">
-              {product.info.name} Quantity: {product.quantity} - Cost per item{' '}
-              {centsToDollarString(product.info.price, DEFAULT_CURRENCY)} -
+              {product.info.name}
+              <br />Quantity: {product.quantity}
+              <br />Cost per item{' '}
+              {centsToDollarString(product.info.price, DEFAULT_CURRENCY)}
+              <br />
               Total cost:{' '}
               {centsToDollarString(
                 product.info.price * product.quantity,
