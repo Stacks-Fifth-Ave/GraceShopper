@@ -8,26 +8,74 @@ const products = [
   {
     name: "The Stefanie's",
     description: 'Floral high heels',
-    price: 2550,
+    price: 32500,
     image: '/stephanies-cropped.png'
   },
   {
     name: "The Camryn's",
     description: 'Black high heels',
-    price: 2950,
+    price: 33500,
     image: '/camryns.jpeg'
   },
   {
     name: "The Malka's",
     description: 'White high heels',
-    price: 3250,
+    price: 34500,
     image: '/malkas-cropped.png'
   },
   {
     name: "The Andy's",
     description: 'Brown leather lace-up boots',
-    price: 3950,
+    price: 36500,
     image: '/andys.jpeg'
+  },
+  {
+    name: "The Rachel's",
+    description: 'Stylish and classy heels',
+    price: 37500,
+    image: '/rachels.jpeg'
+  },
+  {
+    name: "The Jess's",
+    description: 'Navy blue heels',
+    price: 38500,
+    image: '/jesss.jpeg'
+  },
+  {
+    name: "The Orlando's",
+    description: 'Black lace-up shoes',
+    price: 42500,
+    image: '/orlandos.jpeg'
+  },
+  {
+    name: "The Janel's",
+    description: 'Nude heels',
+    price: 44500,
+    image: '/janels.jpeg'
+  },
+  {
+    name: "The Manny's",
+    description: 'Grey sneakers',
+    price: 53500,
+    image: '/mannys.jpeg'
+  },
+  {
+    name: "The Tal's",
+    description: 'Black leather shoes',
+    price: 54500,
+    image: '/tals.jpeg'
+  },
+  {
+    name: "The Ricky's",
+    description: 'White and black sneakers',
+    price: 57500,
+    image: '/rickys.jpeg'
+  },
+  {
+    name: "The Mike's",
+    description: 'White sneakers',
+    price: 59500,
+    image: '/mikes.jpeg'
   }
 ];
 
