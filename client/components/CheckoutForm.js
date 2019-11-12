@@ -196,7 +196,7 @@ class CheckoutForm extends React.Component {
           <Checkout
             name="Checkout"
             description="enter you account email"
-            amount={1}
+            amount={this.props.total}
           />
         </div>
         <div>
@@ -231,7 +231,8 @@ class CheckoutForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  paid: state.cart.paid
+  paid: state.cart.paid,
+  total: state.cart.total / 100
 });
 
 const mapDispatchToProps = dispatch => ({
