@@ -8,6 +8,7 @@ import {clearProducts, getCart} from './cart';
 const GET_USER = 'GET_USER';
 const REMOVE_USER = 'REMOVE_USER';
 const DELETE_USER = 'DELETE_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 /**
  * INITIAL STATE
@@ -20,6 +21,7 @@ const defaultUser = {};
 const getUser = user => ({type: GET_USER, user});
 const removeUser = () => ({type: REMOVE_USER});
 const deletedUser = user => ({type: DELETE_USER, user});
+const updatedUser = user => ({type: UPDATE_USER, user});
 
 /**
  * THUNK CREATORS
@@ -70,6 +72,15 @@ export const deleteUser = user => async dispatch => {
   }
 };
 
+export const updateUser = (user, newUserInfo) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/users/${user.id}`, newUserInfo);
+    dispatch(updatedUser(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 /**
  * REDUCER
  */
@@ -79,6 +90,8 @@ export default function(user = {}, action) {
       return action.user;
     case REMOVE_USER:
       return defaultUser;
+    case UPDATE_USER:
+      return action.user;
     default:
       return user;
   }

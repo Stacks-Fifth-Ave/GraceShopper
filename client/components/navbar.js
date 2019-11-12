@@ -30,7 +30,10 @@ const Navbar = props => (
                 <Link to="/orders">Order History</Link>
               </li>
               <li>
-                <Link to="/home">User Profile</Link>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/userProfile">User Profile</Link>
               </li>
               {props.isAdmin ? (
                 <li>
