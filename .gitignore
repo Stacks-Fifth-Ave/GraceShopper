@@ -7,3 +7,4 @@ secrets.js
 npm-debug.log
 yarn-error.log
 *.spec.js
+yarn.lock

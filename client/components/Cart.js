@@ -3,8 +3,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {removeProduct, getCart, clearProducts, addTotal} from '../store/cart';
 import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters.js';
-import Checkout from './Checkout';
-import CheckoutForm from './CheckoutForm';
 
 class DisconnectedCart extends React.Component {
   constructor() {

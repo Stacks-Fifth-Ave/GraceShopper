@@ -2,8 +2,18 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {addProduct} from '../store/cart';
 import {centsToDollarString, DEFAULT_CURRENCY} from '../formatters';
+import {ToastProvider, useToasts} from 'react-toast-notifications';
 
-const SingleProduct = props => {
+const SingleProductWithToast = props => {
+  const {addToast} = useToasts();
+  const addToCart = async value => {
+    addToast(`${value.name} added to cart`, {
+      appearance: 'success',
+      autoDismiss: true
+    });
+    props.submit(value);
+  };
+
   // convert cents to a string to represent the value in dollars
   return (
     <div className="center single-product">
@@ -22,7 +32,7 @@ const SingleProduct = props => {
         <div className="card-action center">
           <button
             className="waves-effect waves-light btn-large"
-            onClick={() => props.submit(props.product)}
+            onClick={() => addToCart(props.product)}
             type="submit"
           >
             Add to Cart
@@ -37,4 +47,14 @@ const mapDispatchToProps = dispatch => ({
   submit: product => dispatch(addProduct(product))
 });
 
-export default connect(null, mapDispatchToProps)(SingleProduct);
+const ConnectedProduct = connect(null, mapDispatchToProps)(
+  SingleProductWithToast
+);
+
+const SingleProduct = props => (
+  <ToastProvider>
+    <ConnectedProduct product={props.product} />
+  </ToastProvider>
+);
+
+export default SingleProduct;
