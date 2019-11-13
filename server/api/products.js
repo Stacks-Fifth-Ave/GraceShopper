@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {Product} = require('../db/models');
+const {isAdminMiddleware, isCurrentUserMiddleware} = require('../middleware');
 
 const NO_PRODUCTS = 'No products found.';
 const PRODUCT_NOT_FOUND = 'Product not found. ID #: ';
@@ -31,7 +32,7 @@ router.get('/:productId', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const newProductInfo = req.body;
     const newProduct = await Product.create(newProductInfo);
@@ -41,7 +42,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', isAdminMiddleware, async (req, res, next) => {
   try {
     const curProductId = req.params.productId;
     const curProduct = await Product.findByPk(curProductId);
@@ -53,7 +54,7 @@ router.put('/:productId', async (req, res, next) => {
   }
 });
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdminMiddleware, async (req, res, next) => {
   try {
     const productId = req.params.productId;
     const product = await Product.destroy({
