@@ -21,9 +21,11 @@ class ManageAllProducts extends React.Component {
     return (
       <div>
         <h1>All Products</h1>
-        {this.state.products.map(product => (
-          <ManageSingleProduct key={product.id} product={product} />
-        ))}
+        <div className="row">
+          {this.state.products.map(product => (
+            <ManageSingleProduct key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     );
   }
