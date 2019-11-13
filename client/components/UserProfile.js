@@ -22,19 +22,18 @@ class UserProfile extends React.Component {
   handleSubmit(event) {
     if (event.target.id === 'emailButton') {
       const newEmail = document.getElementById('newEmail').value;
-      // let userCopy = JSON.parse(JSON.stringify(this.state.user));
-
-      // userCopy.email = newEmail;
-      // this.setState({
-      //   user: userCopy
-      // });
       this.setState({
         user: {email: newEmail}
       });
       this.props.update(this.state.user, {email: newEmail});
     }
-    // if (event.target.id === 'passwordButton') {
-    // }
+    if (event.target.id === 'passwordButton') {
+      const newPassword = document.getElementById('newPassword').value;
+      this.setState({
+        user: {password: newPassword}
+      });
+      this.props.update(this.state.user, {password: newPassword});
+    }
     event.preventDefault();
   }
 
@@ -64,16 +63,32 @@ class UserProfile extends React.Component {
               <h3>Password</h3>
               <h4>New Password:</h4>
             </label>
-            <input name="password" type="text" />
+            <input name="password" id="newPassword" type="password" />
             <button
               className="waves-effect waves-light btn-large"
               type="submit"
               id="passwordButton"
-              onClick={this.handleSubmit}
+              onClick={e => this.handleSubmit(e)}
             >
               Update Password
             </button>
           </form>
+          <div className="msg-bar-validation">
+            {this.state.validEmail || this.state.email === '' ? (
+              <p />
+            ) : (
+              <p>Please enter a valid e-mail address.</p>
+            )}
+            {this.state.validPassword || this.state.password === '' ? (
+              <p />
+            ) : (
+              <p>
+                A password must contain one upper-case letter, one lower-case
+                letter, one numeric digit, a special character, and be between
+                8-16 characters in length.
+              </p>
+            )}
+          </div>
         </div>
       </div>
     );
