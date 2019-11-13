@@ -5,8 +5,12 @@ import {deleteUser} from '../store/user';
 const SingleUser = props => {
   return (
     <div className="single-user">
-      <h1>{props.user.email}</h1>
-      <button onClick={() => props.remove(props.user)} type="submit">
+      <h2>{props.user.email}</h2>
+      <button
+        className="waves-effect waves-light btn-large"
+        onClick={() => props.remove(props.user)}
+        type="submit"
+      >
         Remove User
       </button>
     </div>
