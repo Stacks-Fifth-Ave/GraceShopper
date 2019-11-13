@@ -35,27 +35,34 @@ const DisconnectedCartWithToast = props => {
     <div>
       <div className="row">
         {props.products.map(product => (
-          <div className="single-product" key={product.info.id}>
-            <div className="card-image center">
-              <img className="single-product-image" src={product.info.image} />
-              <span className="card-title">
-                {product.info.name} - Quantity: {product.quantity} - Cost per
-                item {centsToDollarString(product.info.price, DEFAULT_CURRENCY)}{' '}
-                - Total cost:{' '}
-                {centsToDollarString(
-                  product.info.price * product.quantity,
-                  DEFAULT_CURRENCY
-                )}
-              </span>
-            </div>
-            <div className="card-action center">
-              <button
-                className="waves-effect waves-light btn-large"
-                onClick={() => removeFromCart(product)}
-                type="submit"
-              >
-                Remove
-              </button>
+          <div className="card">
+            <div className="center single-product" key={product.info.id}>
+              <div className="card-image center">
+                <img
+                  className="single-product-image"
+                  src={product.info.image}
+                />
+                <span className="card-title">
+                  {product.info.name} - Quantity: {product.quantity} - Cost per
+                  item{' '}
+                  {centsToDollarString(product.info.price, DEFAULT_CURRENCY)} -
+                  Total cost:{' '}
+                  {centsToDollarString(
+                    product.info.price * product.quantity,
+                    DEFAULT_CURRENCY
+                  )}
+                </span>
+              </div>
+              <div />
+              <div className="card-action center">
+                <button
+                  className="waves-effect waves-light btn-large"
+                  onClick={() => removeFromCart(product)}
+                  type="submit"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         ))}
