@@ -1,7 +1,17 @@
-/* head title {
-  font: Snell Roundhand;
-  font-family: cursive;
-} */
+div h1 {
+  font-family: 'URW Chancery L';
+  color: #9e9e9e;
+}
+
+div h2 {
+  font-family: 'URW Chancery L';
+  color: #9e9e9e;
+}
+
+div h3 {
+  font-family: 'URW Chancery L';
+  color: #9e9e9e;
+}
 
 body {
   font-family: sans-serif;
@@ -15,10 +25,6 @@ label {
   display: block;
 }
 
-/* nav {
-  color: pink;
-} */
-
 .nav-wrapper {
   background-color: rgb(110, 143, 159) !important;
   font-size: 14px;
@@ -28,12 +34,6 @@ label {
 .nav-wrapper .brand-logo {
   font-family: 'Snell Roundhand';
 }
-
-/* div .row {
-  display: flex;
-  flex-direction: row;
-  height: 50%;
-} */
 
 .row {
   display: flex;
@@ -55,8 +55,9 @@ label {
 } */
 
 .card .card-image .card-title {
-  background-color: rgb(110, 143, 159);
-  padding: 5px;
+  /* background-color: rgb(110, 143, 159); */
+  background-color: #9e9e9e;
+  padding: 1px;
 }
 
 form {
