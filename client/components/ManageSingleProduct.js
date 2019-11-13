@@ -19,7 +19,11 @@ const UnconnectedManageSingleProduct = props => {
           <p>{props.product.description}</p>
         </div>
       </div>
-      <button onClick={() => props.delete(props.product)} type="submit">
+      <button
+        className="waves-effect waves-light btn-large"
+        onClick={() => props.delete(props.product)}
+        type="submit"
+      >
         Remove Product
       </button>
     </div>
