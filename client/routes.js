@@ -8,6 +8,7 @@ import allProducts from './components/allProducts';
 import AllUsers from './components/AllUsers';
 import CheckoutForm from './components/CheckoutForm';
 import UserProfile from './components/UserProfile';
+import ManageAllProducts from './components/ManageProducts';
 
 /**
  * COMPONENT
@@ -36,6 +37,7 @@ class Routes extends Component {
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/orders" component={OrderHistory} />
             <Route path="/allUsers" component={AllUsers} />
+            <Route path="/manageProducts" component={ManageAllProducts} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
