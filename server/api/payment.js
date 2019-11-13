@@ -1,7 +1,9 @@
 const {stripe_publishable} = require('../../secrets');
 const configureStripe = require('stripe');
-const stripe = configureStripe(stripe_publishable);
 const router = require('express').Router();
+
+const stripeKey = stripe_publishable || process.env.stripe_publishable;
+const stripe = configureStripe(stripeKey);
 
 const postStripeCharge = res => (stripeErr, stripeRes) => {
   //   if (stripeErr) {
