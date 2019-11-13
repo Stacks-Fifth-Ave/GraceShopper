@@ -32,10 +32,16 @@ const Navbar = props => (
               <li>
                 <Link to="/userProfile">User Profile</Link>
               </li>
+
               {props.isAdmin ? (
-                <li>
-                  <Link to="/allUsers">Manage Users</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/allUsers">Manage Users</Link>
+                  </li>
+                  <li>
+                    <Link to="/manageProducts">Manage Products</Link>
+                  </li>
+                </>
               ) : null}
               <li>
                 <a href="#" onClick={props.handleClick}>
