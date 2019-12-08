@@ -34,7 +34,7 @@ const DisconnectedCartWithToast = props => {
   return (
     <div className="container">
       {props.products.map(product => (
-        <div className="card horizontal row" key={product.info.id}>
+        <div className="card horizontal" key={product.info.id}>
           <div className="card-image col">
             <img className="single-product-image" src={product.info.image} />
           </div>
