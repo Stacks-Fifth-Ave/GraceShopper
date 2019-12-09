@@ -112,3 +112,9 @@ div .msg-bar-validation {
     flex-wrap: wrap;
   }
 }
+
+.all-products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
