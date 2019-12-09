@@ -16,7 +16,6 @@ const SingleProductWithToast = props => {
 
   // convert cents to a string to represent the value in dollars
   return (
-    <div className="center single-product">
       <div className="card">
         <div className="card-image center">
           <img className="single-product-image" src={props.product.image} />
@@ -39,7 +38,6 @@ const SingleProductWithToast = props => {
           </button>
         </div>
       </div>
-    </div>
   );
 };
 
